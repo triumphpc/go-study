@@ -25,7 +25,7 @@ func main() {
 			case val = <-in: // (1) in это канал для чтения для inch
 				fmt.Println("in", val)
 				out = outch // (2) канал для записи инициализация
-				in = nil
+				in = nil    // блокируем для записи
 			}
 		}
 	}()

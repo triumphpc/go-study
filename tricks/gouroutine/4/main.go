@@ -26,7 +26,7 @@ func main() {
 
 	fmt.Println("go 2")
 	for !done {
-		fmt.Println("")
+		fmt.Println("x")
 	}
 
 	fmt.Printf("Done")

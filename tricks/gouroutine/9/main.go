@@ -19,6 +19,7 @@ func main() {
 			case <-done:
 				fmt.Println(idx, "exiting")
 			}
+			fmt.Println(idx, "here")
 		}(i)
 	}
 
