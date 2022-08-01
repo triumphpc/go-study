@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 
 	fmt.Println(test())  // 1
-	fmt.Println(test2()) // 2
+	fmt.Println(test2()) // 3
 	fmt.Println(test3()) // 2
 	fmt.Println(test4()) // 1
 

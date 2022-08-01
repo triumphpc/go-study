@@ -1,4 +1,4 @@
-package fuzztestingingo
+package _
 
 func Equal(a []byte, b []byte) bool {
 	if len(a) != len(b) {

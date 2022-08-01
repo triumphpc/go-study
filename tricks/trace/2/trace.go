@@ -2,6 +2,7 @@
 // better understand tracing in Go.
 
 // https://learning.oreilly.com/videos/ultimate-go-programming/9780135261651/9780135261651-UGP2_01_14_05/
+// https://www.ardanlabs.com/blog/2019/07/garbage-collection-in-go-part3-gcpacing.html
 // 1. ./trace                                                                                                                               triumphpc@MacBook-Pro-triumphpc
 //2022/06/14 22:59:58 Searching 4000 files, found president 28000 times.
 

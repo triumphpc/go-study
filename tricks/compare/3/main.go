@@ -15,6 +15,10 @@ type data struct {
 	bytes  []byte            // несравниваемо
 }
 
+type S struct {
+	a, b string
+}
+
 func main() {
 	v1 := data{}
 	v2 := data{}
@@ -27,4 +31,10 @@ func main() {
 	s1 := []int{1, 2, 3}
 	s2 := []int{1, 2, 3}
 	fmt.Println("s1 == s2:", reflect.DeepEqual(s1, s2)) // prints: s1 == s2: true
+
+	// Сравнение интерфейсов
+
+	x := interface{}(&S{"a", "b"})
+	y := interface{}(&S{"a", "b"})
+	fmt.Println(reflect.DeepEqual(x, y)) // true
 }

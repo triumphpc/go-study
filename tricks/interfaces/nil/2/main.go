@@ -18,15 +18,48 @@ func initType() S {
 
 func initInterface() interface{} {
 	var s S
+
 	return s
+}
+
+type IF interface {
+	F()
+}
+
+func (s S) F() {
 
 }
 
+func initInterfacePointer() interface{} {
+	var s *S
+
+	return s
+}
+
+func initInterfaceType() IF {
+	var s S
+
+	return s
+}
+
+func initInterfaceTypePointer() IF {
+	var s *S
+
+	return s
+}
+
 func main() {
+	fmt.Println(initInterfacePointer() == nil) // false
+
+	fmt.Println(initInterfaceType() == nil) // false
+
+	fmt.Println(initInterfaceTypePointer() == nil) // false
 
 	fmt.Println(initPointer() == nil) // true
 
-	//fmt.Println(initType() == nil) // error
+	fmt.Println(initType()) // {}
+
+	//fmt.Println(initType() == nil) // error, тип структуры нельзя сравниться с nil
 
 	fmt.Println(initInterface() == nil) // false
 

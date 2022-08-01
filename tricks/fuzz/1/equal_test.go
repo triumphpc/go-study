@@ -1,4 +1,4 @@
-package fuzztestingingo
+package _
 
 import "testing"
 
