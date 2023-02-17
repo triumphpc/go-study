@@ -11,7 +11,7 @@ import (
 func main() {
 	ch := make(chan int)
 	done := make(chan struct{})
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 5; i++ {
 		go func(idx int) {
 			select {
 			case ch <- (idx + 1) * 2:

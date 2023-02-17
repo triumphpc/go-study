@@ -9,4 +9,13 @@ func main() {
 	//s2 := num[::4] // так нельзя объявлять
 	//fmt.Println(s2)
 
+	sl := make([]int, 0, 2)
+
+	ll := []int{1, 2, 3}
+	for _, v := range ll {
+		sl = append(sl, v)
+	}
+
+	fmt.Println(sl)
+
 }

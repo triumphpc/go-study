@@ -8,6 +8,14 @@ var m = map[string]bool{
 	"test3": false,
 }
 
+//type Test struct {
+//	extraData map[string]string
+//}
+
+var parentEvtIDs = map[string]bool{
+	"a5bfd710d74844cf9927b3b1b0d5f1c1": false,
+}
+
 func main() {
 
 	defer func() {
@@ -25,6 +33,26 @@ func main() {
 		if _, ok := m[val]; ok {
 			m[val] = true
 		}
+	}
+
+	var extraData map[string]string
+
+	fmt.Println(len(extraData))
+
+	fmt.Println(extraData == nil)
+
+	extraData = make(map[string]string)
+	extraData["test"] = "vvv"
+
+	fmt.Printf("%v", extraData)
+
+	has := make(map[string]bool)
+	has["one"] = true
+
+	if _, ok := parentEvtIDs["a5bfd710d74844cf9927b3b1b0d5f1c1"]; !ok {
+		println("НЕТ")
+	} else {
+		println("ЕСТЬ")
 	}
 
 }

@@ -48,12 +48,18 @@ type T2 struct {
 }
 
 type Foo struct {
+	// xx00 xxxx
+	// xx00
+	// 12 byte
 	aaa [2]bool // offset of bytes: 0
 	bbb int32   // offset of bytes: 4
 	ccc [2]bool // offset of bytes: 8
 }
 
+// Bar т.е. тут видно, что выделяется меньше памяти
 type Bar struct {
+	// xxxx xxxx
+	// 8 byte
 	aaa [2]bool // offset of bytes: 0
 	ccc [2]bool // offset of bytes: 2
 	bbb int32   // offset of bytes: 4
@@ -64,8 +70,11 @@ func main() {
 	x := T0{}
 	y := &T0{} // Тут аллокация памяти на 1 байт
 
+	var takeInt32 int32                              // 32 bit
+	fmt.Println(takeInt32, unsafe.Sizeof(takeInt32)) // 0 4 bytes
+
 	fmt.Println(x, unsafe.Sizeof(x)) // {} 0
-	fmt.Println(y, unsafe.Sizeof(y)) // &{} 8
+	fmt.Println(y, unsafe.Sizeof(y)) // &{} 8 byte
 
 	x1 := T00{}  // 8
 	y1 := &T00{} // 8
