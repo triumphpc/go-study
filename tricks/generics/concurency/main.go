@@ -36,7 +36,7 @@ type Func[T, V any] func(context.Context, T) (V, error)
 
 // Promise Функция промис для асинхронного вызова функций
 // Обещание имеет возвращаемое значение и ошибку, а также готовый канал. Обратите внимание,
-//что поля val и err не экспортируются; мы хотим заблокировать доступ к ним, пока значения не будут заполнены.
+// что поля val и err не экспортируются; мы хотим заблокировать доступ к ним, пока значения не будут заполнены.
 type Promise[V any] struct {
 	val  V
 	err  error
@@ -49,6 +49,7 @@ func Run[T, V any](ctx context.Context, t T, f Func[T, V]) *Promise[V] {
 	p := Promise[V]{
 		done: done,
 	}
+
 	go func() {
 		defer close(done)
 		p.val, p.err = f(ctx, t)
@@ -58,8 +59,8 @@ func Run[T, V any](ctx context.Context, t T, f Func[T, V]) *Promise[V] {
 }
 
 // Get Run и Get работают вместе, чтобы гарантировать, что данные будут записаны в Promise до того, как они станут доступными.
-//Мы никогда не пишем в готовый канал, хранящийся в Promise. Вместо этого он закрывается, чтобы сигнализировать о завершении
-//обработки с использованием шаблона готового канала (done channel pattern.).
+// Мы никогда не пишем в готовый канал, хранящийся в Promise. Вместо этого он закрывается, чтобы сигнализировать о завершении
+// обработки с использованием шаблона готового канала (done channel pattern.).
 func (p *Promise[V]) Get() (V, error) {
 	<-p.done // Флаг закрытия канала (завершения наполнение данными структуры Promise
 
@@ -206,8 +207,8 @@ func RunProcess(ctx context.Context, data Input) (Output, error) {
 
 // RunProcess2 - работа с Get Run
 // Эта версия RunProcess скрывает запуск всех горутин и управление каналами. Читабельность значительно улучшилась,
-//но это не совсем то, что было у нас изначально. Раньше, если вызов OtherThingToDoConcurrently завершался раньше ThingToDoConcurrently
-//и завершался с ошибкой, код не ждал; RunProcess немедленно завершает работу, возвращая ошибку.
+// но это не совсем то, что было у нас изначально. Раньше, если вызов OtherThingToDoConcurrently завершался раньше ThingToDoConcurrently
+// и завершался с ошибкой, код не ждал; RunProcess немедленно завершает работу, возвращая ошибку.
 func RunProcess2(ctx context.Context, data Input) (Output, error) {
 	var out Output
 
@@ -263,15 +264,15 @@ func RunProcess3(ctx context.Context, data Input) (Output, error) {
 }
 
 // WithCancellation использует преимущества нашего старого друга, шаблона канала готовности.
-//Фактически мы используем два готовых канала. В каждом контексте есть метод Done, который
-//возвращает канал. Этот канал закрывается, когда контекст отменяется либо по тайм-ауту,
-//либо по вызову функции отмены, связанной с контекстом. Мы также создаем свой собственный
-//сделанный канал. Функция, возвращаемая WithCancellation, вызывает переданную функцию
-//Func в горутине. Когда горутина завершается, наш канал done закрывается.
-//Мы используем оператор select, чтобы дождаться закрытия канала done или закрытия канала,
-//возвращаемого контекстным методом Done. Если наш закрывается первым, мы возвращаем
-//результаты переданного Func. Если канал done контекста закрывается первым, мы возвращаем
-//нулевое значение и ошибку из контекста.
+// Фактически мы используем два готовых канала. В каждом контексте есть метод Done, который
+// возвращает канал. Этот канал закрывается, когда контекст отменяется либо по тайм-ауту,
+// либо по вызову функции отмены, связанной с контекстом. Мы также создаем свой собственный
+// сделанный канал. Функция, возвращаемая WithCancellation, вызывает переданную функцию
+// Func в горутине. Когда горутина завершается, наш канал done закрывается.
+// Мы используем оператор select, чтобы дождаться закрытия канала done или закрытия канала,
+// возвращаемого контекстным методом Done. Если наш закрывается первым, мы возвращаем
+// результаты переданного Func. Если канал done контекста закрывается первым, мы возвращаем
+// нулевое значение и ошибку из контекста.
 func WithCancellation[T, V any](f Func[T, V]) Func[T, V] {
 	return func(ctx context.Context, t T) (V, error) {
 		done := make(chan struct{})
@@ -332,7 +333,7 @@ func ImplementSolution(ctx context.Context, in Input) (Output, error) {
 }
 
 // Then Есть еще одна операция, которую люди любят делать с обещаниями: связывать их вместе.
-//Давайте посмотрим на реализацию Then:
+// Давайте посмотрим на реализацию Then:
 func Then[T, V any](ctx context.Context, p *Promise[T], f Func[T, V]) *Promise[V] {
 	done := make(chan struct{})
 	out := Promise[V]{
@@ -351,18 +352,20 @@ func Then[T, V any](ctx context.Context, p *Promise[T], f Func[T, V]) *Promise[V
 }
 
 func main() {
-	// Проверка работы Run
+	// 1. Проверка работы Run
 	ctx := context.Background()
 	p1 := Run(ctx, 10, func(ctx context.Context, i int) (int, error) {
 		return i * 2, nil
 	})
+
 	p2 := Run(ctx, 10, func(ctx context.Context, i int) (int, error) {
 		return i * 3, nil
 	})
-	err := WaitTakeTwo(p1, p2)
-	fmt.Println(err)      // nil
-	fmt.Println(p1.Get()) // 20
-	fmt.Println(p2.Get()) // 30
+	err := WaitTakeTwo(p1, p2) // Тут ждет пока не получим два значения из Run
+	fmt.Println(err)           // nil
+
+	fmt.Println(p1.Get()) // 20 <nil>
+	fmt.Println(p2.Get()) // 30 <nil>
 
 	// Но если нужно разные типы возврата, ваш код не скомпилируется. Вот краткий пример:
 	// type *Promise[string] of p2 does not match inferred type *Promise[int] for *Promise[V]
@@ -389,5 +392,6 @@ func main() {
 		return i * 4, nil
 	})
 	val, err := p2.Get()
-	fmt.Println(val, err)
+	fmt.Println(val, err) // 80 <nil>
+
 }
