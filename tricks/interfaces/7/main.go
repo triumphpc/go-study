@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 var o = fmt.Print
 
@@ -24,12 +27,15 @@ func (C) m() int {
 }
 
 func main() {
-
 	var c interface{} = C{}
-	_, bf := c.(interface{ f() })  // true  приведение типа
-	_, bg := c.(interface{ g() })  // false приведение типа
-	bm := c.(interface{ m() int }) // false приведение типа
+	log.Printf("%T %v\n", c, c) //  main.C {0 0}
 
-	fmt.Println(bf, bg, bm.m()) // true false 9
+	_, bf := c.(interface{ f() })      // true  приведение типа
+	_, bg := c.(interface{ g() })      // false приведение типа (так как их несколько у наследников)
+	bm, ok := c.(interface{ m() int }) // true приведение типа
+
+	log.Printf("%T %v\n", bm, bm) //  main.C {0 0}
+
+	fmt.Println(bf, bg, ok, bm.m()) // true false true 9
 
 }

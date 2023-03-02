@@ -3,17 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	a := [...]int{0, 1, 2, 3, 4, 5, 6}
+	//var a []int = nil (len 0 cap 0)
+	//a, a[0] = []int{1, 9}, 9 //panic: runtime error: index out of range [0] with length 0
+	// Справа на лево проставляется
 
-	s0 := a[1:]    // [1,2,3,4,5,6] [6, 6]
-	s1 := s0[:2:4] // [1,2,x,x] [2, 4]
+	a := []int{123}
+	a, a[0] = nil, 9 // []
+	// Тут норм
 
-	fmt.Println(s0)     // [1 2 3 4 5 6]
-	fmt.Println(s0[4:]) // [5 6]
-
-	s2 := append(s1, s0[4:]...) // [1,2,4,5,6] - новый массив будет: 0 1 2 5 6 5 6
-	s2 = append(s2, 7)          // [1,2,4,5,6,7]
-
-	fmt.Println(a) // [0 1 2 5 6 5 6]
+	fmt.Println(a)
 
 }

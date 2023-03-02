@@ -10,10 +10,13 @@ import (
 
 func main() {
 	val := runtime.GOMAXPROCS(1)
-	fmt.Println(val)
+	fmt.Println(val) // Возвращает текущее значение = 16
 
 	val = runtime.GOMAXPROCS(0)
-	fmt.Println(val)
+	fmt.Println(val) // 1
+
+	val = runtime.GOMAXPROCS(0)
+	fmt.Println(val) // 1
 
 	done := false
 

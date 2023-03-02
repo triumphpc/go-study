@@ -3,12 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	//var a []int = nil
-	//a, a[0] = []int{1, 9}, 9 //panic: runtime error: index out of range [0] with length 0
+	var x *[9]int
+	x = &[...]int{8: 1, 0: 2}
+	fmt.Println(x, len(x), cap(x)) // &[2 0 0 0 0 0 0 0 1] 9 9
 
-	a := []int{123}
-	a, a[0] = nil, 9 // []
+	y := x[1:3]                    // [0 0]
+	fmt.Println(y, cap(y), len(y)) //[0 0] 8 2
 
-	fmt.Println(a)
-
+	z := y[5:7]                    // [0 0]
+	fmt.Println(z, cap(z), len(z)) //[0 0] 3 2
+	// С базового берет
 }

@@ -13,5 +13,14 @@ loop:
 		}
 	}
 
+	for {
+		switch {
+		case true:
+			fmt.Println("breaking out...")
+			goto loopS
+		}
+	}
+loopS:
+
 	fmt.Println("out!")
 }

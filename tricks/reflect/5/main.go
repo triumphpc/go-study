@@ -1,22 +1,38 @@
 package main
 
-import (
-	"fmt"
-	"reflect"
-)
+import "log"
+
+import "github.com/ssrathi/go-scrub"
+
+// https://github.com/ssrathi/go-scrub/
+// Удаляет конфидициальные поля
 
 func main() {
-	var v reflect.Value
-	a := fmt.Sprint(v) == v.String()
 
-	fmt.Println(a, fmt.Sprint(v)) // false <invalid reflect.Value>
+	// Have a struct with some sensitive fields.
+	type testScrub struct {
+		Username string
+		Password string
+		Codes    []string
+	}
 
-	v = reflect.ValueOf(v)
-	b := fmt.Sprint(v) == v.String()
-	fmt.Println(b, fmt.Sprint(v)) // false <invalid Value>
+	// Create a struct with some sensitive data.
+	T := testScrub{
+		Username: "administrator",
+		Password: "my_secret_passphrase",
+		Codes:    []string{"pass1", "pass2", "pass3"},
+	}
 
-	v = reflect.ValueOf(v)
-	c := fmt.Sprint(v) == v.String()
-	fmt.Println(c, fmt.Sprint(v)) // true <reflect.Value Value>
+	// Create a set of field names to scrub (default is 'password').
+	fieldsToScrub := map[string]bool{
+		"password": true,
+		"codes":    true,
+	}
+
+	// Call the util API to get a JSON formatted string with scrubbed field values.
+	out := scrub.Scrub(&T, fieldsToScrub)
+
+	// Log the scrubbed string without worrying about prying eyes!
+	log.Println(out) // {"Username":"administrator","Password":"********","Codes":["********","********","********"]}
 
 }

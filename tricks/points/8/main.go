@@ -2,97 +2,32 @@ package main
 
 import "fmt"
 
-type myType struct {
-	my int
-}
+// в функцию передается по значению
+// создается копия
+func add(arr []int, x int) {
+	fmt.Printf("%+v %p %d %d \n", arr, &arr, len(arr), cap(arr)) // [0 0 0 0 0 0 0 0 0 0] 0xc000010060 10 10
+	// видно, что это новый слайс в другой области памяти, но ссылается на один базовый массив
 
-type MyVal int
+	arr[1] = 1 // до аллокации ссылаются на общий базовый массив
 
-type EventRequest struct {
-	Code      string
-	Parent    string
-	Consumer  []string
-	Data      interface{}
-	ProdQueue string
-	ConsQueue []string
+	arr = append(arr, x) // тут добавляется новый элемент, выделяется новая область памяти
+
+	fmt.Printf("%+v %p %d %d \n", arr, &arr, len(arr), cap(arr)) // [0 1 0 0 0 0 0 0 0 0 10] 0xc000010060 11 20
+
+	arr[9] = 9
+	fmt.Printf("%+v %p %d %d \n", arr, &arr, len(arr), cap(arr)) // [0 1 0 0 0 0 0 0 0 9 10] 0xc000010060 11 20
+
+	arr[1] = 11
+	fmt.Printf("%+v %p %d %d \n", arr, &arr, len(arr), cap(arr)) // [0 11 0 0 0 0 0 0 0 9 10] 0xc000010060 11 20
+
 }
 
 func main() {
-	var i myType
+	arr := make([]int, 10)
+	fmt.Printf("%+v %p %d %d \n", arr, &arr, len(arr), cap(arr)) // [0 0 0 0 0 0 0 0 0 0] 0xc000010030 10 10
 
-	change(&i)
+	add(arr, 10)
 
-	//if i == nil {
-	//
-	//}
-
-	fmt.Println(i)
-	// Проверка, что структура не пустая
-	fmt.Println(myType{} == i)
-
-	res := ret()
-
-	if res == nil {
-		fmt.Println("vvvv")
-	}
-
-	f := &myType{
-		123,
-	}
-
-	fmt.Printf("%v", *f)
-
-	var r2 []myType
-	r2 = append(r2, myType{3})
-
-	fmt.Println(len(r2))
-	fmt.Println(r2 == nil)
-
-	var newSt *myType
-
-	newSt = &myType{my: 123}
-
-	change2(newSt)
-	fmt.Println(newSt)
-
-	var event *EventRequest
-
-	event = getEvent()
-
-	fmt.Println(event)
-
-	checkParentEvent(event)
-
-	fmt.Println(event)
-
-}
-
-func checkParentEvent(event *EventRequest) {
-
-	event.Parent = "vvvv"
-}
-
-func getEvent() (event *EventRequest) {
-	return &EventRequest{
-		Code: "cccc",
-		Data: "ffff",
-	}
-}
-
-func change2(i *myType) {
-
-	*i = myType{1}
-}
-
-func change(i *myType) {
-
-	//*i = myType{1}
-}
-
-func ret() []myType {
-
-	r := make([]myType, 1)
-
-	return r
+	fmt.Printf("%+v %p %d %d \n", arr, &arr, len(arr), cap(arr)) // [0 1 0 0 0 0 0 0 0 0] 0xc000010030 10 10
 
 }

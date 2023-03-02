@@ -1,56 +1,33 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+	"unsafe"
+)
 
-type MyType int
-
-type MyType2 struct {
-	val []*MyType
-}
-
-type MyTypeStruct2 struct {
-	name string
+type MyType struct {
+	created time.Time
+	updated *time.Time
 }
 
 func main() {
-	tt := MyType(1)
+	var ttt *time.Time
 
-	var tt2 *MyType
+	n := time.Now()
+	ttt = &n
 
-	tt3 := MyType(55)
-	tt2 = &tt3
+	fmt.Println(ttt) // 2023-02-25 12:41:08.598364 +0300 MSK m=+0.000068617
 
-	fmt.Println(tt)
+	nn := new(MyType)
+	nn.created = time.Now()
 
-	fmt.Println(tt2)
+	fmt.Println(unsafe.Sizeof(nn)) // 8 байт
 
-	test(tt)
-	test(*tt2)
+	hh := struct{}{}
+	fmt.Println(unsafe.Sizeof(hh)) // 0 байт
 
-	fmt.Println("--------")
+	var ii int
+	fmt.Println(unsafe.Sizeof(ii)) // 8 байт
 
-	testVal := MyTypeStruct2{
-		name: "Тестовая",
-	}
-
-	var routes []*MyTypeStruct2
-
-	routes = make([]*MyTypeStruct2, 0, 1)
-	routes = append(routes, &testVal)
-
-	fmt.Println(routes, cap(routes), len(routes))
-
-	test2(routes)
-
-}
-
-func test(tt MyType) {
-	fmt.Println(tt)
-
-}
-
-func test2(test []*MyTypeStruct2) {
-	for id := range test {
-		fmt.Println(test[id].name)
-	}
 }

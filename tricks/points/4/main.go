@@ -23,13 +23,13 @@ func main() {
 	d := data{1, &key, make(map[string]bool)}
 
 	fmt.Printf("num=%v key=%v items=%v\n", d.num, *d.key, d.items)
-	// prints num=1 key=key.1 items=map[]
+	// num=1 key=key.1 items=map[]
 
 	d.pmethod()
 	fmt.Printf("num=%v key=%v items=%v\n", d.num, *d.key, d.items)
-	// prints num=7 key=key.1 items=map[]
+	// num=7 key=key.1 items=map[]
 
 	d.vmethod()
 	fmt.Printf("num=%v key=%v items=%v\n", d.num, *d.key, d.items)
-	// prints num=7 key=v.key items=map[vmethod:true]
+	// num=7 key=v.key items=map[vmethod:true] - map ссылочный тип, значения меняются
 }

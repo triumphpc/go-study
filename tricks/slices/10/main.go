@@ -1,34 +1,17 @@
-// Какая строка приводит к ошибке компиляции
 package main
 
 import "fmt"
 
-type T struct{ n int }
-
-var x, y = T{}, T{9}
-
 func main() {
-	//[3]T{}[0] = y // error
-	f := []T{2: x}
-	f2 := [3]T{2: x}
-	fmt.Printf("%v %T\n", f2, f2) // [{0} {0} {0}]
+	str := "Воттак"
 
-	fmt.Printf("%v %T\n", f, f) // [{0} {0} {0}]
+	fmt.Println(len(str)) // 12
 
-	f[0] = y
-	fmt.Printf("%v %T\n", f, f) //[{9} {0} {0}]
+	s := []rune(str)
+	fmt.Println(len(s)) // 6
 
-	f2[0] = y
-	fmt.Printf("%v %T\n", f, f) //[{9} {0} {0}]
+	ns := append(s[:3], '.', '.', '.')
+	fmt.Println(string(ns)) // Вот...
+	fmt.Println(len(ns))    // 6
 
-	[]T{2: x}[0] = y // Типа тоже самое, но без присвоения переменной и это норм
-
-	m := map[int]T{}
-	fmt.Printf("%v %T\n", m, m) // map[] map[int]main.T
-	m[5] = y
-	fmt.Printf("%v %T\n", m, m) // map[5:{9}] map[int]main.T
-	map[int]T{}[5] = y          // Типа присвоение
-
-	[]T{2: x}[0].n = 6 // В слайсе допустимо обращение к полю структуры, так как хранится указатель
-	//map[int]T{}[5].n = 6 //  error. В mape так нельзя
 }

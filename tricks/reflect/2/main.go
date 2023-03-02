@@ -16,7 +16,10 @@ func (T) K() {}
 
 func main() {
 	v := reflect.ValueOf(T{})
-	fmt.Println(v)
-	fmt.Println(v.NumField())  // 2
-	fmt.Println(v.NumMethod()) // 2 - видит только экспортированные методы
+	fmt.Println(v) // {0 0}
+
+	fmt.Println(v.NumField())               // 2
+	fmt.Println(v.NumMethod())              // 2 - видит только экспортированные методы
+	fmt.Println(reflect.TypeOf(T{}).Name()) // T
+
 }

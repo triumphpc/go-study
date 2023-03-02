@@ -1,23 +1,13 @@
-// Сортировка элементов слайса
 package main
 
-import (
-	"fmt"
-	"sort"
-)
-
-type S struct {
-	v int
-}
+import "fmt"
 
 func main() {
-	a := []S{{1}, {5}, {6}}
+	num := [10]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	s1 := num[:5:8] // capacity
+	//s2 := num[::3] // error
 
-	sort.Slice(a, func(i, j int) bool {
-		return i < j
-
-	})
-
-	fmt.Println(a)
+	fmt.Println(len(s1), cap(s1)) // 0 1 2 3 4 x x x [5, 8]
+	//fmt.Println(len(s2), cap(s2)) // 0 1 2 3 4 x x x [5, 8]
 
 }

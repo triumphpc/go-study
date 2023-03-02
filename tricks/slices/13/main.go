@@ -3,11 +3,21 @@ package main
 import "fmt"
 
 func main() {
-	num := [10]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-	s1 := num[:5:8] // capacity
-	//s2 := num[::3] // error
+	a := []int{1, 2, 3}
+	fmt.Printf("%v %T %v %v\n", a, a, cap(a), len(a)) // [1 2 3] []int 3 3
 
-	fmt.Println(len(s1), cap(s1)) // 0 1 2 3 4 x x x [5, 8]
-	fmt.Println(len(s2), cap(s2)) // 0 1 2 3 4 x x x [5, 8]
+	b := [...]int{1, 2, 3}
+	fmt.Printf("%v %T %v %v\n", b, b, cap(b), len(b)) // [1 2 3] [3]int 3 3
+
+	c := b // копия
+	b[0] = 42
+
+	fmt.Printf("%v %T %v %v\n", b, b, cap(b), len(b)) // [42 2 3] [3]int 3 3
+	fmt.Printf("%v %T %v %v\n", c, c, cap(c), len(c)) // [1 2 3] [3]int 3 3
+
+	z := a // ссылка на один базовый
+	z[0] = 42
+	fmt.Printf("%v %T %v %v\n", z, z, cap(z), len(z)) // [42 2 3] []int 3 3
+	fmt.Printf("%v %T %v %v\n", a, a, cap(a), len(a)) // [42 2 3] []int 3 3
 
 }

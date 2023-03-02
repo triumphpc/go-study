@@ -9,21 +9,22 @@ import (
 )
 
 func main() {
-	//var data = []byte(`{"status": 200}`)
-	//
-	//var result map[string]interface{}
-	//if err := json.Unmarshal(data, &result); err != nil {
-	//	fmt.Println("error:", err)
-	//	return
-	//}
+	var data = []byte(`{"status": 200}`)
+
+	var result map[string]interface{}
+	if err := json.Unmarshal(data, &result); err != nil {
+		fmt.Println("error:", err)
+		return
+	}
 
 	// Преобразовать значение с плавающей запятой в целочисленный тип, который вам нужен.
-	//var status = uint64(result["status"].(float64)) // хорошо
+	var status = uint64(result["status"].(float64)) // хорошо
 	// Использовать тип Decoder для десериализации JSON и представления JSON-чисел с помощью интерфейсного типа Number.
 	//var status, _ = result["status"].(json.Number).Int64() // хорошо
-	//fmt.Println("status value:", status)
+	fmt.Println("status value:", status)
 
-	//ver3()
+	ver3()
+	ver4()
 	ver5()
 }
 

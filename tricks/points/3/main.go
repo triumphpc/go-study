@@ -1,18 +1,16 @@
-// qwert
-
 package main
 
 import "fmt"
 
 func main() {
 	s := "qwe"
-	ps := &s
-	b := []byte(*ps)
-	pb := &b
+	ps := &s         // указатель на область
+	b := []byte(*ps) // отдельная аллокация на значение области ps
+	pb := &b         // указатель на область b
 
-	s += "r"
-	*ps += "t"
-	*pb = append(*pb, []byte("y")[0])
+	s += "r"                          // s, ps = qwer
+	*ps += "t"                        // s, ps = qwert
+	*pb = append(*pb, []byte("y")[0]) // qwey
 
-	fmt.Printf(*ps)
+	fmt.Printf(*ps, string(*pb)) // qwert %!(EXTRA string=qwey)
 }

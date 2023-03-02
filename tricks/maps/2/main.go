@@ -1,17 +1,15 @@
-// # github.com/triumphpc/go-study/tricks/maps/2
-//./main.go:13:2: cannot assign to struct field m["x"].name in map
-
 package main
 
-type S struct {
-	name string
-}
+import "fmt"
 
 func main() {
-	//m := map[string]S{"x": S{"one"}}
-	//fmt.Println("%v %p", m, m)
-	//
-	//m["x"].name = "test"
-	//fmt.Println(m["x"].name)
+	inc := map[int]bool{1: false, 3: true}
+
+	val, ok := inc[555]
+	fmt.Println(val, ok) // false (дефолтное значение), false
+
+	inc2 := map[int]int{1: 3, 3: 5}
+	val2, ok2 := inc2[555]
+	fmt.Println(val2, ok2) // 0 (дефолтное значение), false
 
 }

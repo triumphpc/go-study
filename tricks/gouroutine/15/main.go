@@ -1,35 +1,28 @@
-// Go может менять порядок некоторых операций, но общее поведение внутри горутины,
-//где это происходит, не меняется. Однако сказанное не относится к порядку исполнения самих горутин.
-
 package main
 
 import (
-	"runtime"
+	"fmt"
+	"sync"
 	"time"
 )
 
-var _ = runtime.GOMAXPROCS(3)
-
-var a, b int
-
-func u1() {
-	a = 1
-	b = 2
-}
-
-func u2() {
-	a = 3
-	b = 4
-}
-
-func p() {
-	println(a)
-	println(b)
-}
-
 func main() {
-	go u1()
-	go u2()
-	go p()
-	time.Sleep(1 * time.Second)
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+	go func() {
+		time.Sleep(time.Second * 2)
+		fmt.Println("1")
+		wg.Done()
+	}()
+
+	wg.Wait() // Ожидание выполнение горутины
+
+	go func() {
+		fmt.Println(2)
+	}()
+
+	fmt.Println(3)
+
+	// Будет выводить 1,  2 или 3
 }

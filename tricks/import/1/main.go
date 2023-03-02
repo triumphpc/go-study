@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	. "github.com/rogpeppe/fastuuid" //  Можно вот так испортировать, но не принято
+
+	. "github.com/rogpeppe/fastuuid" //  Можно вот так импортировать, но не принято
 	// Тогда работа будет относительно текущего пакета работа
 )
 

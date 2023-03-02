@@ -1,25 +1,34 @@
+// Какая строка приводит к ошибке компиляции
 package main
 
-import (
-	"bytes"
-	"fmt"
-)
+import "fmt"
+
+type T struct{ n int }
+
+var x, y = T{}, T{9}
 
 func main() {
-	path := []byte("AAAA/BBBBBBBBB")
-	sepIndex := bytes.IndexByte(path, '/')
-	dir1 := path[:sepIndex:sepIndex] // полное выражение слайса
-	dir2 := path[sepIndex+1:]
+	//[3]T{}[0] = y // error
+	f := []T{2: x}
+	f2 := [3]T{2: x}
+	fmt.Printf("%v %T\n", f2, f2) // [{0} {0} {0}]
 
-	fmt.Println("dir1 =>", string(dir1)) // выводит: dir1 => AAAA
-	fmt.Println("dir2 =>", string(dir2)) // выводит: dir2 => BBBBBBBBB
+	fmt.Printf("%v %T\n", f, f) // [{0} {0} {0}]
 
-	dir1 = append(dir1, "suffix"...)
-	path = bytes.Join([][]byte{dir1, dir2}, []byte{'/'})
+	f[0] = y
+	fmt.Printf("%v %T\n", f, f) //[{9} {0} {0}]
 
-	fmt.Println("dir1 =>", string(dir1)) // выводит: dir1 => AAAAsuffix
-	fmt.Println("dir2 =>", string(dir2)) // выводит: dir2 => BBBBBBBBB (ok now)
+	f2[0] = y
+	fmt.Printf("%v %T\n", f, f) //[{9} {0} {0}]
 
-	fmt.Println("new path =>", string(path))
+	[]T{2: x}[0] = y // Типа тоже самое, но без присвоения переменной и это норм
 
+	m := map[int]T{}
+	fmt.Printf("%v %T\n", m, m) // map[] map[int]main.T
+	m[5] = y
+	fmt.Printf("%v %T\n", m, m) // map[5:{9}] map[int]main.T
+	map[int]T{}[5] = y          // Типа присвоение
+
+	[]T{2: x}[0].n = 6 // В слайсе допустимо обращение к полю структуры, так как хранится указатель
+	//map[int]T{}[5].n = 6 //  error. В mape так нельзя, нельзя присвоить по указателю
 }

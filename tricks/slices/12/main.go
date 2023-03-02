@@ -2,28 +2,30 @@ package main
 
 import "fmt"
 
+// в какой строке будет паника
+
 func main() {
-	str := "Воттак"
+	x := []int(nil)
+	fmt.Println(x, len(x), cap(x)) // [] 0 0
 
-	fmt.Println(str)
-	fmt.Println(len(str))
+	x = []int{}
+	fmt.Println(x, len(x), cap(x)) // [] 0 0
 
-	s := []rune(str)
-	fmt.Println(len(s))
-	ns := append(s[:3], '.', '.', '.')
-	fmt.Println(string(ns))
-	fmt.Println(len(ns))
+	_ = x[:]
 
-	newMap := make(map[string]string)
-	newMap["test1"] = "v1"
-	newMap["test2"] = "v2"
+	y := map[int]int(nil)
+	fmt.Println(y) // map[]
 
-	fmt.Println(newMap)
+	z := interface{}(x)
+	fmt.Println(z) // []
 
-	for id, v := range newMap {
-		delete(newMap, id)
-		newMap["new"+v] = v
-	}
-	fmt.Println(newMap)
+	w := interface{}(y)
+	fmt.Println(w) // map[]
+
+	_ = z == w // false
+	fmt.Printf("here: %T -  %v\n", w, w)
+	fmt.Printf("here: %T -  %v", z, z)
+
+	_ = z == z // panic: runtime error: comparing uncomparable type []int
 
 }

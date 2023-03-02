@@ -33,4 +33,5 @@ func main() {
 	state := start(0)
 	state = state(1)
 	state = state(2)
+	state = state(0)
 }

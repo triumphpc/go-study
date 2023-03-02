@@ -13,13 +13,14 @@ func main() {
 	done := make(chan struct{})
 	for i := 0; i < 5; i++ {
 		go func(idx int) {
+			fmt.Println(idx, "start")
 			select {
 			case ch <- (idx + 1) * 2:
 				fmt.Println(idx, "sent result")
 			case <-done:
 				fmt.Println(idx, "exiting")
 			}
-			fmt.Println(idx, "here")
+			fmt.Println(idx, "exit")
 		}(i)
 	}
 

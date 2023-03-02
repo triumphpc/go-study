@@ -27,11 +27,12 @@ func main() {
 	//p := &r // можно
 	r.name = "two"
 	m["x"] = r
-	fmt.Printf("%v", m) //выводит: map[x:{two}]
+	fmt.Printf("%v\n", m) //выводит: map[x:{two}]
 
 	// Второе обходное решение: использовать хеш-таблицу с указателями.
-	m2 := map[string]*data{"x": {"one"}}
+	m2 := map[string]*data{
+		"x": {"one"},
+	}
 	m2["x"].name = "two" //ok
 	fmt.Println(m2["x"]) //выводит: &{two}
-
 }

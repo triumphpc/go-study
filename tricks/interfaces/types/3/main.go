@@ -23,7 +23,7 @@ func (C) m() int {
 
 func main() {
 	var c interface{} = C{}
-	_, bf := c.(interface{ f() })
+	_, bf := c.(interface{ f() }) // Синтаксис вызова метода интерфейса, если он есть
 	_, bg := c.(interface{ g() })
 
 	fmt.Println(bf) // true

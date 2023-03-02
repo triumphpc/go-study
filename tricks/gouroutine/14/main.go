@@ -1,38 +1,35 @@
-// Он запускается после сборки мусора, выражений go, операций блокирования каналов, блокирующих системных вызовов
-//и операций блокирования. Также он может работать, когда вызвана невстроенная (non-inlined) функция.
-// Чтобы узнать, встроена ли вызываемая вами в цикле функция, передайте -gcflags –m в go build или go run (например, go build -gcflags -m).
-
-// Другое решение: явно вызвать диспетчер. Это можно сделать с помощью функции Gosched() из пакета runtime.
+// Go может менять порядок некоторых операций, но общее поведение внутри горутины,
+// где это происходит, не меняется. Однако сказанное не относится к порядку исполнения самих горутин.
 
 package main
 
 import (
-	"fmt"
 	"runtime"
+	"time"
 )
 
+var _ = runtime.GOMAXPROCS(3)
+
+var a, b int
+
+func u1() {
+	a = 1
+	b = 2
+}
+
+func u2() {
+	a = 3
+	b = 4
+}
+
+func p() {
+	println(a)
+	println(b)
+}
+
 func main() {
-	done := false
-
-	go func() {
-		done = true
-	}()
-
-	for !done {
-		fmt.Println("not done!") // не встроена
-	}
-	fmt.Println("done!")
-
-	done = false
-
-	go func() {
-		done = true
-	}()
-
-	for !done {
-		fmt.Println("not done!") // не встроена
-		runtime.Gosched()
-	}
-	fmt.Println("done!")
-
+	go u1()
+	go u2()
+	go p()
+	time.Sleep(1 * time.Second)
 }

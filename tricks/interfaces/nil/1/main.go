@@ -35,6 +35,7 @@ func main() {
 	fmt.Printf("%#v\n", man) // (*main.Man)(nil)
 	var worker Programmer
 	fmt.Printf("%#v\n", worker) // <nil>
+	fmt.Println(worker == nil)  // true
 
 	worker = man
 	fmt.Printf("%#v\n", worker) // (*main.Man)(nil)
@@ -44,7 +45,7 @@ func main() {
 
 	fmt.Printf("%t\n", man == nil) // true
 	// отлично, наш man равен nil,
-	// мы же туда ничего не положили и ссылка равна nil
+	// мы же туда ничего не положили и указатель равен nil
 	fmt.Printf("%t\n", worker == man) // true
 	// ну тоже хорошо, мы положили в переменную
 	// worker переменную man,
@@ -93,8 +94,8 @@ func main() {
 	// пробуем вернуть из нашей функции ошибку
 	err = raiseError(true)
 	fmt.Println(err != nil)                         // true
-	fmt.Printf("%v\n", reflect.TypeOf(err))         // *main.CustomError
-	fmt.Printf("%#v\n", err)                        // &main.CustomError{}
+	fmt.Printf("%v\n", reflect.TypeOf(err))         // *main.CustomError // указатель на область памяти
+	fmt.Printf("%#v\n", err)                        // &main.CustomError{} // область памяти
 	fmt.Printf("%v\n", reflect.ValueOf(err).Elem()) // CustomError
 	// отлично, err у нас действительно не равен nil
 
@@ -102,7 +103,7 @@ func main() {
 	err = raiseError(false)
 	fmt.Println(err != nil)                         // true
 	fmt.Printf("%v\n", reflect.TypeOf(err))         // *main.CustomError
-	fmt.Printf("%#v\n", err)                        // (*main.CustomError)(nil)
+	fmt.Printf("%#v\n", err)                        // (*main.CustomError)(nil) // Так как CustomError уже интерфейс и поле tab ссылается на тип CustomError
 	fmt.Printf("%v\n", reflect.ValueOf(err).Elem()) // <invalid reflect.Value>
 	// после преобразования в интерфейс, наш nil уже не очень то и nil
 

@@ -8,7 +8,7 @@ func main() {
 	fmt.Printf("%p %s len=%v cap=%v\n", num, num, len(num), cap(num)) // [0 1 2 3 ...] 10 10
 	fmt.Printf("%p %s len=%v cap=%v\n", s1, s1, len(s1), cap(s1))     // [0 1 2 3 4 . . .]  5 8
 
-	s2 := num[::4]
-	fmt.Printf("%p %s len=%v cap=%v\n", s2, s2, len(s2), cap(s2))     // [0 1 2 3 4 . . .]  5 8
+	//s2 := num[::4] нельзя для такого формата укаазывать меньший капасити
+	//fmt.Printf("%p %s len=%v cap=%v\n", s2, s2, len(s2), cap(s2))     // [0 1 2 3 4 . . .]  5 8
 
 }

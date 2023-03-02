@@ -2,10 +2,23 @@ package main
 
 import "fmt"
 
+type My struct {
+	id int
+}
+
 func main() {
-	num := [10]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-	s1 := num[:5:8]
-	fmt.Println(s1, cap(s1), len(s1)) //[0 1 2 3 4] 8 5
-	//s2 := num[:6:5] // нельзя выделять капасити меньше или больше диапазона
+	arr := []*My{{1}, {2}, {3}, {4}, {5}}
+
+	for id := range arr {
+		if arr[id].id == 5 {
+			arr[id] = arr[len(arr)-1]
+			arr[len(arr)-1] = nil
+			arr = arr[:len(arr)-1]
+
+			break
+		}
+	}
+
+	fmt.Println(arr, cap(arr), len(arr)) // 1 2 3 4 (5 4)
 
 }

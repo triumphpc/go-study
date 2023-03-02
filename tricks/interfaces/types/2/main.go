@@ -1,10 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 func main() {
 	type A = int
 	var a A
+
+	fmt.Printf("%s\n", reflect.ValueOf(a)) // %!s(int=0)
+	fmt.Printf("%v\n", reflect.TypeOf(a))  // int
+
 	a = 10
-	fmt.Printf("%T", a)
+	fmt.Printf("%s\n", reflect.ValueOf(a)) // %!s(int=0)
+	fmt.Printf("%v\n", reflect.TypeOf(a))  //int
 }

@@ -1,35 +1,46 @@
 package main
 
-import "sync"
+import (
+	"fmt"
+	"time"
+)
 
-// Когда вы определяете новый тип на основе существующего (не интерфейсного), тем самым вы создаёте объявление
-//типа и не наследуете методы, объявленные в существующем типе.
+type field struct {
+	name string
+}
 
-//type myMutex sync.Mutex
+func (p *field) print() {
+	fmt.Println(p.name)
+}
 
-//func main() {
-//	var mtx myMutex
-//	mtx.Lock() // ошибка
-//	mtx.Unlock() // ошибка
-//}
-
-// Если вам нужны методы из исходного типа, вы можете задать новый тип структуры, встроив исходный в качестве анонимного поля.
-type myLocker struct {
-	sync.Mutex
+func (p field) printVal() {
+	fmt.Println(p.name)
 }
 
 func main() {
-	var lock myLocker
-	lock.Lock()   // ok
-	lock.Unlock() // ok
+	data := []*field{{"one"}, {"two"}, {"three"}}
+	dataVal := []field{{"one"}, {"two"}, {"three"}}
+
+	// Тут передача по ссылке значения, поэтому нет проблемы передачи значения в горутину
+	for _, v := range data {
+		go v.print()
+	}
+
+	time.Sleep(1 * time.Second)
+
+	for _, v := range dataVal {
+		// Тут передача не по ссыке в горутину, поэтому будет браться послденее проставленное значение
+		go v.print()
+	}
+
+	time.Sleep(1 * time.Second)
+
+	// А тут передача по значению, т.е. передается копия переменной в функцию, которая уже вызывает горутину
+	for _, v := range dataVal {
+		go func(v field) {
+			v.print()
+		}(v)
+	}
+
+	time.Sleep(1 * time.Second)
 }
-
-// Объявления интерфейсных типов также сохраняют свои наборы методов.
-
-//type myLocker sync.Locker
-//
-//func main() {
-//	var lock myLocker = new(sync.Mutex)
-//	lock.Lock() // ok
-//	lock.Unlock() // ok
-//}

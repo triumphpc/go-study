@@ -20,12 +20,12 @@ func main() {
 			select {
 			case out <- val: // (3) срабатывает конструкция и пишет в канал out значение
 				fmt.Println("out ", val)
-				out = nil
-				in = inch
+				out = nil // блокируем out
+				in = inch // разблокируем in
 			case val = <-in: // (1) in это канал для чтения для inch
 				fmt.Println("in", val)
-				out = outch // (2) канал для записи инициализация
-				in = nil    // блокируем для записи
+				out = outch // (2) канал для записи инициализация, т.е. он до этого считается nil
+				in = nil    // блокируем для записи, т.е. он исключает обработку case
 			}
 		}
 	}()
