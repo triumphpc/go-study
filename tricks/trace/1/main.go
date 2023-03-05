@@ -1,13 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"os"
-	"runtime"
-	"runtime/trace"
-	"sync"
-)
-
 // https://making.pusher.com/go-tool-trace/
 //go run main.go                                                                                   triumphpc@MacBook-Pro-triumphpc
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

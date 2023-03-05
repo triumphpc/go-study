@@ -11,6 +11,6 @@ func main() {
 
 	s := []byte(st)
 	s[0] = 'X'
-	fmt.Println(string(s))
+	fmt.Println(string(s)) //Xtring
 
 }

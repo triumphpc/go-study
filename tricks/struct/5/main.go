@@ -1,54 +1,26 @@
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
-type View struct {
-	MessageID   string          `json:"messageId"`
-	MessageType string          `json:"messageType"`
-	MessageData json.RawMessage `json:"message"`
-	Ver         string          `json:"ver"`
-}
-
-type DataStruct struct {
-	ID   string
-	Name string
-}
-
-type Pack struct {
-	v View
-}
+import "fmt"
 
 func main() {
-
-	data := DataStruct{
-		ID:   "test",
-		Name: "test 2",
+	type AA struct {
+		ID int64
 	}
 
-	d, _ := json.Marshal(data)
+	arraySt := []AA{
+		{ID: 1},
+		{ID: 2},
+		{ID: 3},
+	}
 
-	pack := Pack{}
-	pack.v.MessageType = "Вот тут "
-	pack.v.MessageID = "И смотри какая тема"
-	pack.v.MessageData = d
+	tmpMap := map[int64]*AA{}
 
-	res2, _ := json.Marshal(pack.v)
+	for _, val := range arraySt {
+		tmpMap[val.ID] = &val
+	}
 
-	// Теперь распакуем
+	for i := range tmpMap {
+		fmt.Printf("%+v \n", *tmpMap[i]) // {ID:3} {ID:3} {ID:3}
 
-	view := View{}
-
-	json.Unmarshal(res2, &view)
-
-	fmt.Printf("%#v %T", view, view)
-
-	// Распаковка вложенного
-	dataView := DataStruct{}
-	json.Unmarshal(view.MessageData, &dataView)
-
-	fmt.Printf("%#v %T", dataView, dataView)
-
+	}
 }

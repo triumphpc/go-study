@@ -17,7 +17,7 @@ func main() {
 	type A = int
 	{
 		type A struct {
-			*A
+			*A // А тут ссылается сам на себя, так как область видимости не func
 		}
 
 		fmt.Println(

@@ -2,13 +2,21 @@ package main
 
 import "fmt"
 
-type S struct {
-	name string
+type Test interface {
+	string() string
+}
+
+type TestImpl struct {
+	sent string
+}
+
+func (stat *TestImpl) string() string {
+	return stat.sent
 }
 
 func main() {
-	m := map[string]S{"x": S{"one"}}
-	//m["x"].name = "two" // тут ошибка
-	fmt.Println(m["x"].name)
+	var t Test = &TestImpl{"test"}
+	fmt.Printf("%p, %v", t, t)
+	fmt.Println(t.string()) // test
 
 }

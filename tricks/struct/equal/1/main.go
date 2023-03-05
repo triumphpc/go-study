@@ -1,7 +1,7 @@
 package main
 
 type T struct {
-	_ int
+	_ int // Нельзя присваивать
 	_ bool
 }
 
