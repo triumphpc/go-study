@@ -4,7 +4,6 @@ package metrics
 // go tool pprof -http=":9090" /tmp/cpu.profile
 
 import (
-	"log"
 	"os"
 	"runtime"
 	"runtime/pprof"
@@ -16,14 +15,14 @@ var fmem, fcpu *os.File
 func Track(msg string) (string, time.Time) {
 	// Журнал профилирование CPU
 	var err error
-	fcpu, err = os.Create(`/tmp/cpu.profile`)
-	if err != nil {
-		panic(err)
-	}
-
-	if err := pprof.StartCPUProfile(fcpu); err != nil {
-		panic(err)
-	}
+	//fcpu, err = os.Create(`/tmp/cpu.profile`)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//if err := pprof.StartCPUProfile(fcpu); err != nil {
+	//	panic(err)
+	//}
 
 	// создаём файл журнала профилирования памяти
 	fmem, err = os.Create("/tmp/mem.profile")
@@ -35,7 +34,7 @@ func Track(msg string) (string, time.Time) {
 }
 
 func Duration(msg string, start time.Time) {
-	defer fcpu.Close()
+	//defer fcpu.Close()
 	defer fmem.Close()
 	defer pprof.StopCPUProfile()
 
