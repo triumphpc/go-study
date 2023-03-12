@@ -4,6 +4,7 @@ package metrics
 // go tool pprof -http=":9090" /tmp/cpu.profile
 
 import (
+	"log"
 	"os"
 	"runtime"
 	"runtime/pprof"

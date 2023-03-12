@@ -12,6 +12,8 @@ import (
 	tt4 "github.com/triumphpc/go-study/algorithms/yandex/tests/4"
 	tt5 "github.com/triumphpc/go-study/algorithms/yandex/tests/5"
 	tt6 "github.com/triumphpc/go-study/algorithms/yandex/tests/6"
+	tt8 "github.com/triumphpc/go-study/algorithms/yandex/tests/8"
+	tt9 "github.com/triumphpc/go-study/algorithms/yandex/tests/9"
 )
 import "bufio"
 import "strings"
@@ -72,6 +74,12 @@ func main() {
 		data, err = runner.RunTestContestFloat(tc, int(num2), resultSplitted...)
 	case 6:
 		tc := &tt6.TestRun{}
+		data, err = runner.RunTestContestFloat(tc, int(num2), resultSplitted...)
+	case 8:
+		tc := &tt8.TestRun{}
+		data, err = runner.RunTestContestFloat(tc, int(num2), resultSplitted...)
+	case 9:
+		tc := &tt9.TestRun{}
 		data, err = runner.RunTestContestFloat(tc, int(num2), resultSplitted...)
 
 	default:
