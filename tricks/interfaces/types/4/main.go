@@ -22,13 +22,18 @@ func main() {
 	t := &T{S{3}}
 
 	var i I = t
-	f := t.M
+	f := t.M // Тут идет замыкания и берется текущее значение структуры
 
-	fmt.Printf("%T\n", f) // func()
+	fmt.Printf("%T\n", f) // func() int
 
-	g := i.M              // Тут указатель слетает, так как указатель на интерфейс
-	fmt.Printf("%T\n", g) // intfunc()
+	g := i.M              // Тут указатель на тип как интерфейс идет
+	fmt.Printf("%T\n", g) // func() int
+
 	t.X = 7
 
 	fmt.Println(f(), g()) // 3 7
+
+	f2 := t.M // А тут уже обновленное значение
+
+	fmt.Println(f2(), g()) // 7 7
 }
