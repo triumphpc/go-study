@@ -8,7 +8,7 @@ func fn(sl []int) {
 }
 
 func fn2(sl []int) {
-	fmt.Printf("(2)%v - %p\n", sl, sl) // (2)[1 2 3 4] - 0xc00004c020
+	fmt.Printf("(2)%v - %p\n", sl, sl) // (2)[1 555 3 4 666] - 0xc000020140
 	sl[1] = 666
 }
 

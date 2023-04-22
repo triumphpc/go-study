@@ -26,12 +26,12 @@ func main() {
 		}(i)
 	}
 
-	wg.Wait()
-
 	fmt.Println(len(m)) // 10
 
-	mu.Lock()
+	wg.Wait()
+
+	//mu.Lock()
 	fmt.Println(m) // map[0:0 1:1 3:3 4:4 5:5 6:6 7:7 8:8 9:9 10:10]
-	mu.Unlock()
+	//mu.Unlock()
 
 }
