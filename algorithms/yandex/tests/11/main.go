@@ -2,15 +2,18 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
-	"os"
 	"strconv"
 )
 
 // Сортировка слиянием
+// mergeSort - С использованием каналов
+// mergeSort2 - наивный (базовый)
 
 func main() {
-	task(os.Stdin, os.Stdout)
+	//task(os.Stdin, os.Stdout)
+	//task2(os.Stdin, os.Stdout)
 }
 
 func task(in io.Reader, out io.Writer) {
@@ -37,12 +40,84 @@ func task(in io.Reader, out io.Writer) {
 
 	result := mergeSort(digits)
 
-	outStr := ""
-	for idx := range result {
-		outStr += strconv.Itoa(result[idx]) + " "
+	fmt.Fprintf(writer, "%s ", fmt.Sprint(result))
+
+}
+
+func task2(in io.Reader, out io.Writer) {
+	scanner := bufio.NewScanner(in)
+	scanner.Split(bufio.ScanWords)
+	scanner.Scan()
+
+	size, _ := strconv.Atoi(scanner.Text())
+
+	writer := bufio.NewWriter(out)
+	defer func() {
+		_, _ = writer.WriteString("\n")
+		_ = writer.Flush()
+	}()
+
+	digits := make([]int, size)
+
+	for idx := 0; idx < size; idx++ {
+		scanner.Scan()
+
+		num, _ := strconv.Atoi(scanner.Text())
+		digits[idx] = num
 	}
 
-	_, _ = writer.Write([]byte(outStr))
+	result := mergeSort2(digits)
+
+	fmt.Fprintf(writer, "%s ", fmt.Sprint(result))
+
+}
+
+func mergeSort2(data []int) []int {
+	if len(data) <= 1 { // базовый случай рекурсии
+		return data
+	}
+
+	// Запуск на левой стороне
+	left := mergeSort2(data[:len(data)/2])
+
+	// На правой
+	right := mergeSort2(data[len(data)/2:])
+
+	// Аллокация результата
+	result := make([]int, len(data))
+
+	// Слияние результатов
+	l, r, k := 0, 0, 0
+
+	for l < len(left) && r < len(right) {
+		// Выбираем из какого массива забрать минимальный элемента
+		if left[l] < right[r] {
+			result[k] = left[l]
+			l++
+		} else {
+			result[k] = right[r]
+			r++
+		}
+		k++
+	}
+
+	// Если один массив закончился раньше, чем второй то
+	// переносим оставшиеся элементы второго массива в результирующие
+
+	for l < len(left) {
+		result[k] = left[l]
+		l++
+		k++
+	}
+
+	for r < len(right) {
+		result[k] = right[r]
+		r++
+		k++
+	}
+
+	return result
+
 }
 
 func mergeSort(data []int) []int {
