@@ -1,8 +1,8 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"regexp"
 )
 
 type Requisites struct {
@@ -18,30 +18,21 @@ type REQ struct {
 }
 
 func main() {
-	query := "+4794243432434"
+	fmt.Println(test())
 
-	matched, _ := regexp.MatchString(`^(\+7|8|7).{1,100}$`, query)
+}
 
-	fmt.Println(matched) // false
+func test() (err error) {
 
-	//fmt.Println(matched)
+	defer func() {
+		if err != nil {
+			fmt.Printf("here")
+			//err = nil
+		}
+	}()
 
-	//str := "{\n  \"unit\": \"ФИЛИАЛ\",\n  \"inn\": \"9616134640\",\n  \"ogrn\": \"2158233686004\",\n  \"name\": \"ООО \\\"ПОСАД-ТРАНС\\\"\",\n  \"email\": \"vrulin_sv@astralnalog.ru\",\n  \"address\": {\n    \"subject\": \"40 Калужская область\",\n    \"subRegion\": \"Калуга\",\n    \"street\": \"ул Циолковского\",\n    \"building\": \"д 10\"\n  },\n  \"owner\": {\n    \"inn\": \"966118202380\",\n    \"snils\": \"503-804-363 53\",\n    \"patronymic\": \"Тестович\",\n    \"firstname\": \"Тест\",\n    \"surname\": \"Тестов\",\n    \"post\": \"Директор\"\n  }\n}"
-	////
-	////srt2 := "{\"unit\": \"test\"}"
-	//
-	//req := new(Requisites)
-	//
-	//json.Unmarshal([]byte(str), req)
-	//
-	//fmt.Println(req.Name)
-	//
-	//var data json.RawMessage
-	//
-	//var err error
-	//if data, err = json.Marshal(req); err != nil {
-	//}
-	//
-	//fmt.Println(string(data))
+	err = errors.New("Test")
+
+	return err
 
 }

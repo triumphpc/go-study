@@ -2,7 +2,7 @@ package test
 
 import "golang.org/x/exp/slices"
 
-// Линейный поиск
+// Бинарный поиск
 // Задача найти элемент в массиве
 
 type TestRun struct {
