@@ -92,20 +92,20 @@ func (lq *linkedQueue) get() string {
 		return "error"
 	}
 	val := lq.Head.value
-	lq.Head = lq.Head.next
+	lq.Head = lq.Head.next // смещаем элемент на один после выдачи знаячения
 	lq.Size--
 	return val
 }
 func (lq *linkedQueue) put(val string) {
-	if lq.Size == 0 {
+	if lq.Size == 0 { // Определяем первый элемент, связываем его с хвостом
 		lq.Head = &lqItem{val, nil}
 		lq.Tail = lq.Head
 		lq.Size++
 		return
 	}
-	lq.Tail.next = &lqItem{val, nil}
-	lq.Tail = lq.Tail.next
-	lq.Size++
+	lq.Tail.next = &lqItem{val, nil} // Добавляем еще один элемент
+	lq.Tail = lq.Tail.next           // ссылаемся на новый элемент
+	lq.Size++                        // увеличиваем счетчик
 }
 func (lq *linkedQueue) size() string {
 	return strconv.Itoa(lq.Size)
@@ -117,7 +117,8 @@ func task2(src io.Reader, dst io.Writer) {
 	}()
 	scanner := bufio.NewScanner(src)
 	scanner.Scan()
-	commandsTotal, _ := strconv.Atoi(scanner.Text())
+	commandsTotal, _ := strconv.Atoi(scanner.Text()) // 1. Определяем сколько всего команд
+
 	lq := &linkedQueue{}
 	for commandsTotal > 0 {
 		scanner.Scan()

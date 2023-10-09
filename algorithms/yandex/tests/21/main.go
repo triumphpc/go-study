@@ -49,7 +49,7 @@ func task(src io.Reader) {
 	req()
 }
 
-func req() {
+func req() { // Пробегаемся по списку и суммируем предыдущие
 	queue[idx] = queue[idx-1] + queue[idx-2]
 	if num == idx+1 {
 		//fmt.Println(queue[idx])
@@ -60,6 +60,42 @@ func req() {
 	idx++
 
 	req()
+}
+
+func task4(src io.Reader) {
+	writer := bufio.NewWriter(os.Stdout)
+	defer func() {
+		//writer.Flush()
+	}()
+
+	scanner := bufio.NewScanner(src)
+
+	// num of commands
+	scanner.Scan()
+	num, _ = strconv.Atoi(scanner.Text())
+
+	if num < 3 {
+		writer.WriteString("1")
+
+		return
+	}
+
+	queue = make([]int, num)
+	queue[0] = 1
+	queue[1] = 1
+	idx = 2
+
+	req4()
+}
+
+func req4() {
+	for {
+		queue[idx] = queue[idx-1] + queue[idx-2]
+		if num == idx+1 {
+			return
+		}
+		idx++
+	}
 }
 
 func fi(n int) int { /// Плохое решение, ростет стек вызова

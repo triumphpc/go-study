@@ -42,15 +42,14 @@ func task(src io.Reader, dst io.Writer) {
 
 func sort(array []int8) {
 	for i := 1; i < len(array); i++ {
-		insertItem := array[i]
-		j := i
+		insertItem := array[i] // 1. Определяем элемент для вставки
+		j := i                 // 2. Помещаем текущу позицию во временную переменную
 
-		for j > 0 && insertItem < array[j-1] {
-			array[j] = array[j-1]
-			j -= 1
+		for j > 0 && insertItem < array[j-1] { // 3. Если это не нулевой элемент он больше чем предыдущий
+			array[j] = array[j-1] // меняем его местами
+			j -= 1                // смещаем на шаг назад
 		}
 
-		array[j] = insertItem
-		//fmt.Printf("step %d, sorted {%d} elements: {%v}\n", i, i+1, array)
+		array[j] = insertItem // 4. Выставляем текущей позиции значение
 	}
 }

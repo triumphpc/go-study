@@ -28,7 +28,7 @@ func main() {
 	node1 := ListNode{"node1", &node2}
 	node0 := ListNode{"node0", &node1}
 
-	current := Solution(&node0, 3)
+	current := Solution(&node0, 1)
 
 	for {
 		fmt.Println(current.data)
@@ -48,7 +48,7 @@ type ListNode struct {
 }
 
 func Solution(head *ListNode, idx int) *ListNode {
-	if idx == 0 {
+	if idx == 0 { // 1. Если удаляем нулевой элемент - сразу возвращаем следующий
 		return head.next
 	}
 
@@ -57,8 +57,8 @@ func Solution(head *ListNode, idx int) *ListNode {
 	prev := head
 
 	for {
-		if current.next == nil {
-			if currentIdx == idx {
+		if current.next == nil { // 2. Если next == nil
+			if currentIdx == idx { // Если текущий индекс равен удаляемому - то предыдущий элемент ссылается на nil
 				prev.next = nil
 			}
 
@@ -66,11 +66,11 @@ func Solution(head *ListNode, idx int) *ListNode {
 		}
 
 		if currentIdx == idx {
-			prev.next = current.next
+			prev.next = current.next // Тут просто один пропускаем
 
 			return head
 		} else {
-			currentIdx++
+			currentIdx++ // Иначе повышаем индекс и смещаем шаг вправо
 			prev = current
 			current = current.next
 		}
@@ -82,14 +82,14 @@ func Solution2(head *ListNode, index int) *ListNode {
 		return head.next
 	}
 	pos := 1
-	prev := head
+	prev := head // 1. Обозначаем предыдущий
 	for {
-		cur := prev.next
-		if pos == index {
+		cur := prev.next  // 2. Текущий в итерации = следующий
+		if pos == index { // Если это искомая позиция, то предыдущий начинает ссылаться на следующий
 			prev.next = cur.next
 			return head
 		}
-		prev = cur
+		prev = cur // В противном случае пердыдущий = текущему
 		pos++
 		if prev.next == nil {
 			return head

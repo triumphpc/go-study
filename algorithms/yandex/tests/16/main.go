@@ -38,20 +38,20 @@ func task(src io.Reader) {
 	scanner.Scan()
 	num, _ := strconv.Atoi(scanner.Text())
 	stack := make([]int, 0, num)
-	max := 0
+	max := 0 //
 
 	// run commands
-	for i := 0; i < num; i++ {
+	for i := 0; i < num; i++ { // 1. Читаем по очереди команды
 		scanner.Scan()
 		line := scanner.Text()
 
 		switch line {
-		case "get_max":
+		case "get_max": // Возвращаем максимальное
 			if max > 0 {
 				l := strconv.Itoa(max)
 				_, _ = writer.WriteString(l + "\n")
 			}
-		case "pop":
+		case "pop": // удаляем число из стека
 			if len(stack) == 0 {
 				_, _ = writer.WriteString("error\n")
 				continue
@@ -59,7 +59,7 @@ func task(src io.Reader) {
 
 			l := strconv.Itoa(stack[len(stack)-1])
 
-			if max == stack[len(stack)-1] {
+			if max == stack[len(stack)-1] { // Тут определяем максимальное число в стеке. Но можно и хранить предыдыщий шаг
 				sortStack := stack[:len(stack)-1]
 				sort.Slice(sortStack, func(i, j int) bool {
 					return i > j
@@ -70,11 +70,11 @@ func task(src io.Reader) {
 			_, _ = writer.WriteString(l + "\n")
 			stack = stack[:len(stack)-1]
 
-		default:
+		default: // добавляем в стек
 			words := strings.Split(line, " ")
 			n, _ := strconv.Atoi(words[1])
 			stack = append(stack, n)
-			if max < n {
+			if max < n { // обновляем максимальное
 				max = n
 			}
 		}

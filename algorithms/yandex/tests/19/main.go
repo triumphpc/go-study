@@ -30,7 +30,7 @@ func task(src io.Reader) {
 	scanner.Scan()
 	max, _ := strconv.Atoi(scanner.Text())
 	queue := new(queue)
-	queue.values = make([]int, 0, max)
+	queue.values = make([]int, 0, max) // // 1. Аллоцируем память под очередь
 
 	// run commands
 	for i := 0; i < num; i++ {

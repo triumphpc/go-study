@@ -62,11 +62,11 @@ func task(src io.Reader, dst io.Writer) {
 		return
 	}
 
-	//if len(in) == 1 {
-	//	n, _ := strconv.Atoi(num)
-	//	fmt.Fprintf(dst, "%s\n", mapData[int8(n)])
-	//	return
-	//}
+	if len(in) == 1 {
+		n, _ := strconv.Atoi(num)
+		fmt.Fprintf(dst, "%s\n", mapData[int8(n)])
+		return
+	}
 
 	parse("", in[0], 0, dst)
 
@@ -103,21 +103,28 @@ func task2(src io.Reader, dst io.Writer) {
 	scanner.Scan()
 	inputKeys := strings.Split(scanner.Text(), "")
 	keyValues := make([][]string, 0)
+
 	for _, key := range inputKeys {
-		keyValues = append(keyValues, strings.Split(keys[key], ""))
+		keyValues = append(keyValues, strings.Split(keys[key], "")) // 1. Получаем массив массивов комбинаций
 	}
 
-	fmt.Println(keyValues)
-	combine("", keyValues, dst)
-	fmt.Fprint(dst, "\n")
-}
-
-func combine(prefix string, keyValues [][]string, dst io.Writer) {
 	if len(keyValues) == 0 {
-		fmt.Fprintf(dst, "%s ", prefix)
 		return
 	}
-	for _, letter := range keyValues[0] {
-		combine(prefix+letter, keyValues[1:], dst)
+
+	out := ""
+	combine("", keyValues[1:], &out)
+	fmt.Fprint(dst, out+"\n")
+}
+
+func combine(prefix string, keyValues [][]string, out *string) {
+	if len(keyValues) == 0 {
+		*out += fmt.Sprintf("%s ", prefix)
+
+		return
+	}
+
+	for _, letter := range keyValues[0] { // 2. Пока не закончится последовательность, набиваем строку и потом распечатываем (можно на самом деле писать в буфер не печатая
+		combine(prefix+letter, keyValues[1:], out)
 	}
 }

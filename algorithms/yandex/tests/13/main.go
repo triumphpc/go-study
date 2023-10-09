@@ -19,7 +19,7 @@ type ListNode struct {
 	next *ListNode
 }
 
-func Solution(head *ListNode) {
+func Solution(head *ListNode) { // Решение хуже, потому что тут стек ростет = большое памяти
 	if head == nil {
 		return
 	}

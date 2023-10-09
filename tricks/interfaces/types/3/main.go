@@ -10,7 +10,7 @@ func (A) m() int { return 1 }
 type B int
 
 func (B) g() {}
-func (B) f() {}
+func (B) f() { fmt.Println("B(f)") }
 
 type C struct {
 	A
@@ -23,7 +23,7 @@ func (C) m() int {
 
 func main() {
 	var c interface{} = C{}
-	_, bf := c.(interface{ f() }) // Синтаксис вызова метода интерфейса, если он есть
+	_, bf := c.(interface{ f() }) // Синтаксис проверки, реализует ли интерфейс c методы interface {f()}
 	_, bg := c.(interface{ g() })
 
 	fmt.Println(bf) // true

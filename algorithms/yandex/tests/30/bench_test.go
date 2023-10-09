@@ -16,10 +16,10 @@ func BenchmarkBasic(b *testing.B) {
 }
 
 func BenchmarkBasic2(b *testing.B) {
-	in := strings.NewReader("qwertyuiopsdfghjklxcvbnmwertyuiopqwertyuiopsdfghjklxcvbnmwertyuiopqwertyuiopsdfghjklxcvbnmwertyuiopxxxxx\nxxxx\n")
+	in := strings.NewReader("qwertyuiopsdfghjklxcvbnmwertyuiopqwertyuiopsdfghjklxcvbnmwertyuiopqwertyuiopsdfghjklxcvbnmwertyuiop\nxxxxx\n")
 
 	for i := 0; i < b.N; i++ {
-		task(in, io.Discard)
+		task2(in, io.Discard)
 
 	}
 }

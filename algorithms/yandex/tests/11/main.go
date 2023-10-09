@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"os"
 	"strconv"
 )
 
@@ -12,7 +13,7 @@ import (
 // mergeSort2 - наивный (базовый)
 
 func main() {
-	//task(os.Stdin, os.Stdout)
+	task(os.Stdin, os.Stdout)
 	//task2(os.Stdin, os.Stdout)
 }
 
@@ -126,33 +127,35 @@ func mergeSort(data []int) []int {
 	}
 
 	done := make(chan bool)
-	mid := len(data) / 2
+	mid := len(data) / 2 // 1. Сначала на две части делим
 	var left []int
 
 	go func() {
-		left = mergeSort(data[:mid])
+		left = mergeSort(data[:mid]) // 2. Отправляем левую часть
 		done <- true
 	}()
 
-	right := mergeSort(data[mid:])
+	right := mergeSort(data[mid:]) // 3. Отправляем правую часть
+	<-done                         // 4. Ждем пока отработает правая часть
 
-	<-done
+	res := merge(left, right) // 5. мержим левую и правую часть
+	fmt.Printf("left %v right %v res %v\n ", left, right, res)
 
-	return merge(left, right)
+	return res
 
 }
 
 func merge(left, right []int) []int {
 	merged := make([]int, 0, len(left)+len(right))
 
-	for len(left) > 0 || len(right) > 0 {
+	for len(left) > 0 || len(right) > 0 { // 6. Проходимся по всем переданным элементами и сортируем в merged
 		if len(left) == 0 {
 			return append(merged, right...)
 		} else if len(right) == 0 {
 			return append(merged, left...)
-		} else if left[0] < right[0] {
+		} else if left[0] < right[0] { // Тут просто смотрим какие первые элементы больше и аппендим
 			merged = append(merged, left[0])
-			left = left[1:]
+			left = left[1:] // Затем смещаем срез
 		} else {
 			merged = append(merged, right[0])
 			right = right[1:]

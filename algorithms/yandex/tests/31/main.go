@@ -81,26 +81,26 @@ func mergeSort(data []int) []int {
 	}
 
 	done := make(chan bool)
-	mid := len(data) / 2
+	mid := len(data) / 2 // 1. Дели мна две части нужную часть для сортировки
 	var left []int
 
 	go func() {
-		left = mergeSort(data[:mid])
+		left = mergeSort(data[:mid]) // 2. Вызываем рекурсия для левой части массива
 		done <- true
 	}()
 
-	right := mergeSort(data[mid:])
+	right := mergeSort(data[mid:]) // 2. Вызываем рекурсия для правой части массива
 
 	<-done
 
-	return merge(left, right)
+	return merge(left, right) // 3. Мержим эти части
 
 }
 
 func merge(left, right []int) []int {
 	merged := make([]int, 0, len(left)+len(right))
 
-	for len(left) > 0 || len(right) > 0 {
+	for len(left) > 0 || len(right) > 0 { // Сортируем левую и правую часть
 		if len(left) == 0 {
 			return append(merged, right...)
 		} else if len(right) == 0 {

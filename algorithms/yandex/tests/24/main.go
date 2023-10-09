@@ -15,6 +15,8 @@ import (
 //1. (())
 //2. ()()
 //(()) идёт раньше ()(), так как первый символ у них одинаковый, а на второй позиции у первой ПСП стоит (, который идёт раньше ).
+//
+// На вход принимаем число - количество скобок
 
 func main() {
 	task(os.Stdin, os.Stdout)
@@ -42,17 +44,17 @@ func conv(n string) int {
 }
 
 func genBrackets(result string, num, left, right int, dst io.Writer) {
-	if left == num && right == num {
+	if left == num && right == num { // 1. Если левый и правый границы равны - выводим
 		fmt.Println("0")
 		fmt.Fprintf(dst, "%s\n", result)
 		return
 	}
-	if left != num {
+	if left != num { // 2. Если левый шаг не дошел до нужного количества - смещаем его и в рекурсию
 		fmt.Println("X", left, num)
 		genBrackets(result+"(", num, left+1, right, dst)
 		fmt.Println("OUT X", left, num)
 	}
-	if left > right {
+	if left > right { // 3. Далее отработка правой части, пока не заполнит все остатки
 		fmt.Println("Y", left, right)
 		genBrackets(result+")", num, left, right+1, dst)
 

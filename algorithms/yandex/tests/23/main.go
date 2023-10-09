@@ -65,20 +65,20 @@ func conv(n string) int {
 }
 
 func rec(left, right int, cost, step *int) {
-	if left == right {
+	if left == right { // 1. Сравниваем левую и правую границу
 		return
 	}
 
-	mid := (left + right) / 2
+	mid := (left + right) / 2 // 2. Берем середину
 	if mid == left {
 		return
 	}
 
 	cur := conv(line[mid])
-	if cur >= *cost {
+	if cur >= *cost { // 3. Если больше и равно - прибавляем шаг
 		*step = mid + 1
 		rec(left, mid, cost, step)
-	} else {
+	} else { // 4. В противном случае сужаем поиск на нужную срез
 		rec(mid, right, cost, step)
 	}
 }

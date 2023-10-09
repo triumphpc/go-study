@@ -1,38 +1,46 @@
 package main
 
 import (
-	"errors"
-	"fmt"
+	"encoding/json"
+	"log"
 )
 
-type Requisites struct {
-	Name  string `json:"name,omitempty"`
-	Unit  string `json:"unit,omitempty"`
-	INN   string `json:"inn,omitempty"`
-	OGRN  string `json:"ogrn,omitempty"`
-	Email string `json:"email,omitempty"`
+type Person struct {
+	Name string
 }
 
-type REQ struct {
-	Req *Requisites
+func changeName(person *Person) {
+	//person = &Person{ // Тут переопределяется аругумент, он не является уже курсором
+	//	Name: "Alice",
+	//}
+
+	// 1. Как можно изменить не меняя структуры
+	//person.Name = "Alice"
+
+	// 2. Способ
+	//*person = Person{
+	//	Name: "Alice",
+	//}
+}
+
+type POADataJSONResponseT struct {
+	Cost float64 `json:"cost,omitempty"`
 }
 
 func main() {
-	fmt.Println(test())
+	res := &POADataJSONResponseT{
+		Cost: 234,
+	}
 
-}
+	data, _ := json.Marshal(res)
 
-func test() (err error) {
+	log.Println(string(data))
 
-	defer func() {
-		if err != nil {
-			fmt.Printf("here")
-			//err = nil
-		}
-	}()
+	sss := "{\"cost\":234.43}\n"
 
-	err = errors.New("Test")
+	res2 := new(POADataJSONResponseT)
 
-	return err
+	json.Unmarshal([]byte(sss), res2)
+	log.Println(int(res2.Cost))
 
 }

@@ -23,7 +23,7 @@ func main() {
 }
 
 const (
-	strScope1 = 40
+	strScope1 = 40 // 1. Определяем символы скобок
 	endScope1 = 41
 	strScope2 = 123
 	endScope2 = 125
@@ -41,11 +41,11 @@ func checkSequence(src io.Reader) bool {
 	scanner.Scan()
 	slice := []byte(scanner.Text())
 	stack := make([]int8, 0, len(slice)/2)
-	mapIdx := map[int8]int8{endScope1: strScope1, endScope2: strScope2, endScope3: strScope3}
+	mapIdx := map[int8]int8{endScope1: strScope1, endScope2: strScope2, endScope3: strScope3} // Определяем мапу соответсвий символов
 
 	for idx := range slice {
 		switch slice[idx] {
-		case endScope2, endScope1, endScope3:
+		case endScope2, endScope1, endScope3: // Если закрытый символ, то смотрим а скольок было входных символов
 			if len(stack) == 0 && stack[len(stack)-1] != mapIdx[int8(slice[idx])] {
 				return false
 			}

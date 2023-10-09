@@ -44,9 +44,9 @@ func sort(array []int8) {
 	for {
 		has := false
 		for i := 1; i < len(array); i++ {
-			if array[i] < array[i-1] {
+			if array[i] < array[i-1] { // 1. Если следующий меньше предыдущего
 				has = true
-				array[i], array[i-1] = array[i-1], array[i]
+				array[i], array[i-1] = array[i-1], array[i] // Меняем местами элементы
 			}
 		}
 

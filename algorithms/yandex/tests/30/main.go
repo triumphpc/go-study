@@ -17,9 +17,12 @@ import (
 // Обе строки состоят из маленьких латинских букв, длины строк не превосходят 150000. Строки могут быть пустыми.
 // BenchmarkBasic-16     	 2537817	      1394 ns/op	    8197 B/op	       2 allocs/op
 // BenchmarkBasic2-16    	 2552924	      1411 ns/op	    8197 B/op	       2 allocs/op
+
+// BenchmarkBasic-16    	  527365	      1990 ns/op
+// BenchmarkBasic2-16    	 1118985	      1075 ns/op
 // PASS
 func main() {
-	task(os.Stdin, os.Stdout)
+	task2(os.Stdin, os.Stdout)
 }
 
 func task(src io.Reader, dst io.Writer) { // On
@@ -43,13 +46,10 @@ func find(t, s string) bool {
 	tBites := []byte(s)
 
 	for idx := range tBites {
+		f := true
 		if tBites[idx] == sBites[0] {
-			x := idx + 1
-			f := true
-
 			for j := 1; j < len(sBites); j++ {
-				if sBites[j] == tBites[x] {
-					x++
+				if sBites[j] == tBites[idx+j] {
 					continue
 				} else {
 					f = false
@@ -75,10 +75,11 @@ func task2(src io.Reader, dst io.Writer) {
 	str2 := strings.Split(scanner.Text(), "")
 	str2Pos := 0
 	charsFound := 0
-	for i := 0; i < len(str1); i++ {
+
+	for i := 0; i < len(str1); i++ { // Пошагово берем символ с первой
 		charToFind := str1[i]
-		for str2Pos < len(str2) {
-			if str2[str2Pos] == charToFind {
+		for str2Pos < len(str2) { // Начинаю с левой границы проверяем след позиции
+			if str2[str2Pos] == charToFind { // Если равный - количество символов + позицию меняем
 				charsFound++
 				str2Pos++
 				break

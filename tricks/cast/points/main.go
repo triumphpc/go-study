@@ -7,8 +7,6 @@ type intPtr *int
 type MyIntPtr *myInt
 
 func convert(x MyIntPtr) (y intPtr) {
-	// Преобразование разных типов ссылочных
-
 	b := int(*x)
 	y = &b
 
@@ -21,5 +19,5 @@ func main() {
 	a = 5
 	b := convert(&a)
 
-	fmt.Printf("%#v", *b)
+	fmt.Printf("%v", *b)
 }
