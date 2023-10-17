@@ -33,7 +33,6 @@ func testGoroutines1() {
 // Что мы увидим ?
 // processed: cmd.1
 // processed: cmd.2
-//
 func testGoroutines2() {
 	ch := make(chan string)
 	go func() {
@@ -45,7 +44,7 @@ func testGoroutines2() {
 	ch <- "cmd.2"
 }
 
-//  Тут передача через копирование
+// Тут передача через копирование
 func testGoroutines3() {
 	data := []string{"one", "two", "three"}
 	for _, v := range data {

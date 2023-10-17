@@ -22,7 +22,7 @@ func main() {
 		cond: sync.NewCond(&sync.Mutex{}),
 	}
 
-	// 1
+	// 1 Все три горутины здоровуются с введенной переменной
 	for i := 1; i <= 3; i++ {
 		go func(num int) {
 			for {
@@ -48,7 +48,7 @@ func main() {
 		msg.cond.L.Unlock()
 		fmt.Println("UnLock 1")
 
-		msg.cond.Broadcast()
+		msg.cond.Broadcast() // Оповещает все ждущие горутины
 	}
 
 }
