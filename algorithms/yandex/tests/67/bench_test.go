@@ -12,11 +12,14 @@ func BenchmarkBasic(b *testing.B) {
 		},
 		right: &Node{
 			value: 15,
+			left: &Node{
+				value: 10,
+			},
 		},
 	}
 
 	for i := 0; i < b.N; i++ {
-		Solution(tree)
+		insert1(tree, 20)
 	}
 }
 
@@ -28,10 +31,13 @@ func BenchmarkBasic2(b *testing.B) {
 		},
 		right: &Node{
 			value: 15,
+			left: &Node{
+				value: 10,
+			},
 		},
 	}
 
 	for i := 0; i < b.N; i++ {
-		Solution2(tree)
+		insert2(tree, 20)
 	}
 }
