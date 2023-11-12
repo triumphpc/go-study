@@ -5,39 +5,99 @@ import (
 )
 
 func BenchmarkBasic(b *testing.B) {
-	tree := &Node{
-		value: 10,
-		left: &Node{
-			value: 5,
+	tree := &TNode{
+		value: 8,
+		left: &TNode{
+			value: 4,
+			left: &TNode{
+				value: 2,
+				left: &TNode{
+					value: 1,
+				},
+				right: &TNode{
+					value: 3,
+				},
+			},
+			right: &TNode{
+				value: 6,
+				left: &TNode{
+					value: 5,
+				},
+				right: &TNode{
+					value: 7,
+				},
+			},
 		},
-		right: &Node{
-			value: 15,
-			left: &Node{
+		right: &TNode{
+			value: 12,
+			left: &TNode{
 				value: 10,
+				left: &TNode{
+					value: 9,
+					left: &TNode{
+						value: 8,
+						left: &TNode{
+							value: 8,
+						},
+					},
+				},
+			},
+			right: &TNode{
+				value: 14,
 			},
 		},
 	}
 
 	for i := 0; i < b.N; i++ {
-		insert1(tree, 20)
+		Solution1(tree)
 	}
 }
 
 func BenchmarkBasic2(b *testing.B) {
-	tree := &Node{
-		value: 10,
-		left: &Node{
-			value: 5,
+	tree := &TNode{
+		value: 8,
+		left: &TNode{
+			value: 4,
+			left: &TNode{
+				value: 2,
+				left: &TNode{
+					value: 1,
+				},
+				right: &TNode{
+					value: 3,
+				},
+			},
+			right: &TNode{
+				value: 6,
+				left: &TNode{
+					value: 5,
+				},
+				right: &TNode{
+					value: 7,
+				},
+			},
 		},
-		right: &Node{
-			value: 15,
-			left: &Node{
+		right: &TNode{
+			value: 12,
+			left: &TNode{
 				value: 10,
+				left: &TNode{
+					value: 9,
+					left: &TNode{
+						value: 8,
+						left: &TNode{
+							value: 8,
+						},
+					},
+				},
+			},
+			right: &TNode{
+				value: 14,
 			},
 		},
 	}
 
 	for i := 0; i < b.N; i++ {
-		insert2(tree, 20)
+		Solution2(tree)
 	}
 }

@@ -66,7 +66,6 @@ func main() {
 func Solution1(root *TNode) bool {
 	rl := deepCnt(root.left, 0)
 	rr := deepCnt(root.right, 0)
-	fmt.Println(rl, rr)
 	if math.Abs(float64(rl-rr)) > 1 {
 		return false
 	}
