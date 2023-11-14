@@ -310,11 +310,31 @@ func main() {
 	//[0] [0xc00010ce60] [RETURN]
 	//[1] [0xc00010ce60] [v2]
 
+	// 10. Предача нового слайса с указателем на базовый массив
+	s13 := []string{"1", "2", "3"}
+	appElem(s13[:1]) // Передается новый слайс с cap базового сайса,но с длинной переданной
+	inspectSlice(s13)
+	// Length:[1], Cap [3]
+	//[0] [0xc000096e90] [1]
+	//Length:[2], Cap [3]
+	//[0] [0xc000096eb0] [1]
+	//[1] [0xc000096eb0] [NEW]
+	//Length:[3], Cap [3]
+	//[0] [0xc000096ee0] [1]
+	//[1] [0xc000096ee0] [NEW]
+	//[2] [0xc000096ee0] [3]
+
 }
 
 func chElem(sl []string) {
 	inspectSlice(sl)
 	sl[0] = "CHANGED"
+}
+
+func appElem(sl []string) {
+	inspectSlice(sl)
+	sl = append(sl, "NEW")
+	inspectSlice(sl)
 
 }
 
