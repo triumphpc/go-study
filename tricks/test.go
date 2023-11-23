@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 	"time"
 )
 
@@ -27,14 +26,10 @@ type ModelDataResponse struct {
 }
 
 func main() {
+	t := time.Now()
+	year, month, day := t.Date()
+	st := time.Date(year, month, day-2, 0, 0, 0, 0, t.Location())
 
-	str := "123 12"
-
-	nnn := strings.ReplaceAll(str, " ", "")
-	ss := nnn[5:6]
-
-	fmt.Println(ss)
-
-	//fmt.Println(res)
+	fmt.Println(st.Unix())
 
 }

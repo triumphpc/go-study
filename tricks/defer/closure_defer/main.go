@@ -24,4 +24,5 @@ func main() {
 	defer fmt.Println(f()) // 7 (берется в момент инициализации)
 
 	fmt.Println(f()) // 8
+
 }

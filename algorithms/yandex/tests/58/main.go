@@ -48,7 +48,7 @@ func task(src io.Reader, dst io.Writer) {
 	// -2 -1 0 0 1 2
 	//
 
-	for i1 := 0; i1 < n; i1++ { // Шагаем вперед
+	for i1 := 0; i1 < n; i1++ { // Шагаем вперед граница l
 		for j := i1 + 1; j < n-1 && len(history) > 0; j++ {
 			for j2 := j + 1; j2 < n; j2++ {
 				target := k - numbers[i1] - numbers[j] - numbers[j2] // Получаем разницу между целевой и двумя правыми

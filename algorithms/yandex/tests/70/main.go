@@ -25,11 +25,33 @@ func smallLeftRotation(a *TNode) *TNode {
 
 	// Корректируем высоты в зависимости от того, равны ливысоты C и R
 	if C.height == R.height {
-		a.height -= 1
-		b.height += 1
+		a.height--
+		b.height++
 	} else {
 		b.height -= 2
 	}
 
 	return b
+}
+
+// Большое левое вращение
+func bigLeftRotation(a *TNode) *TNode {
+	// Задаем обозначения
+	b := a.right
+	c := b.left
+	m := c.left
+	n := c.right
+
+	// Перевыставляем вершины
+	a.right = m
+	b.left = n
+	c.left = a
+	c.right = b
+
+	// Корректируем высоты
+	a.height -= 2
+	b.height--
+	c.height++
+
+	return c
 }
