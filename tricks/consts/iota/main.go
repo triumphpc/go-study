@@ -28,6 +28,11 @@ const (
 	fixStat2             //2
 )
 
+const (
+	a, b = iota, iota + 1     // 0 1
+	c, d = iota + 2, iota + 3 // 2 3
+)
+
 func main() {
 	fmt.Println(Avito, There, One, Mmmm, Kkk) // 1 2 3 4 5
 

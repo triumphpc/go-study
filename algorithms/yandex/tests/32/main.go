@@ -56,7 +56,7 @@ func quickSort(array []int) []int {
 }
 func partition(array []int, pivot int) (left, center, right []int) {
 	for idx := range array {
-		if array[idx] > pivot { // 3. Перебираем элементы и сравниваем по опорной точке
+		if array[idx] > pivot { // 3. Перебираем элементы и сравниваем по опорной точке, выделяем левую центр и правую часть
 			right = append(right, array[idx])
 		} else if array[idx] < pivot {
 			left = append(left, array[idx])

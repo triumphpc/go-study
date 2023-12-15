@@ -28,16 +28,16 @@ func (*TestRun) Run(k int, in ...float32) (result []float32, err error) {
 	for low <= high { // Пока не сократится до одного элемента
 		mid := (low + high) / 2
 
-		if in[mid] == float32(k) {
+		if in[mid] == float32(k) { // Если середина равна нужному - выдаем ее сразу
 			result = append(result, float32(k))
 
 			return
 		}
 
-		if in[mid] < float32(k) {
+		if in[mid] < float32(k) { // Если значение меньше нужного - берем правую часть для следующей итерации
 			low = mid + 1
 		} else {
-			high = mid - 1
+			high = mid - 1 // или левую
 		}
 	}
 

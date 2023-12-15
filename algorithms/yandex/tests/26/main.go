@@ -40,6 +40,13 @@ func task(src io.Reader, dst io.Writer) {
 
 }
 
+// 5 4 2 1
+// 4 5 2 1
+// 2 >
+// j = 2
+// 4 2 5 1
+// 2 4 5 1
+
 func sort(array []int8) {
 	for i := 1; i < len(array); i++ {
 		insertItem := array[i] // 1. Определяем элемент для вставки
@@ -50,6 +57,6 @@ func sort(array []int8) {
 			j -= 1                // смещаем на шаг назад
 		}
 
-		array[j] = insertItem // 4. Выставляем текущей позиции значение
+		array[0] = insertItem // 4. Выставляем текущей позиции значение
 	}
 }

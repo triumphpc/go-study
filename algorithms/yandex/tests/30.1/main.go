@@ -12,6 +12,12 @@ import (
 // dvdf
 // dvdfdfkloi
 // https://www.code-recipe.com/post/longest-substring-without-repeating-characters
+
+// O(n) - сложность алгоритма O(1) - сложность по памяти, так как работа с мапой
+// Мы проверяем каждый символ в строке только один раз. Да, нам также придется удалить элементы из хэш-карты, как
+// только будет найден повторяющийся символ, но это операция с постоянным временем, потому что в нашем случае карта может
+// хранить только 62 элемента до того, как будет найден дубликат.
+
 func main() {
 	task(os.Stdin, os.Stdout)
 }
@@ -107,41 +113,50 @@ func max(num1, num2 int) int {
 
 // Метод скользящего окна. Самый быстрый
 func lengthOfLongestSubstring3(s string) int {
-	// Length of the given input string
+	// Определение длинны строки
 	n := len(s)
 
-	// Length of longest substring
+	// Результат количества
 	var result int
 
 	// Map to store visited characters along with their index
+	// Хэш истории индекса для символов
 	charIndexMap := make(map[uint8]int)
 
 	// start indicates the start of current substring
+	// Стартовый индекс текущей подстроки
 	var start int
 
 	// Iterate through the string and slide the window each time you find a duplicate
 	// end indicates the end of current substring
+	// Начинаем проходить строку пошагово
 	for end := 0; end < n; end++ {
 
 		// Check if the current character is a duplicate
+		// Проверяем, был ли символ уже ранее
 		duplicateIndex, isDuplicate := charIndexMap[s[end]]
 		if isDuplicate {
 			// Update the result for the substring in the current window before we found duplicate character
+			// Максимальное из текущего значения или текущий шаг-стартовый для подстроки
 			result = max(result, end-start)
 
 			// Remove all characters before the new
+			// Удаляем все подстроки из истории до настроящего шага
 			for i := start; i <= duplicateIndex; i++ {
 				delete(charIndexMap, s[i])
 			}
 
 			// Slide the window since we have found a duplicate character
+			// Двигаем старт подстроки до дубликата + 1
 			start = duplicateIndex + 1
 		}
 		// Add the current character to hashmap
+		// Добавляем символ текущей итерации в историю
 		charIndexMap[s[end]] = end
 	}
 	// Update the result for last window
 	// For a input like "abc" the execution will not enter the above if statement for checking duplicates
+	// Для случая, если вообще не было дубликатов - полный размер строки
 	result = max(result, n-start)
 
 	return result

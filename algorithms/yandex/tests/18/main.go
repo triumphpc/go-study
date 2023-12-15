@@ -46,11 +46,11 @@ func checkSequence(src io.Reader) bool {
 	for idx := range slice {
 		switch slice[idx] {
 		case endScope2, endScope1, endScope3: // Если закрытый символ, то смотрим а сколько было входных символов
-			if len(stack) == 0 && stack[len(stack)-1] != mapIdx[int8(slice[idx])] {
+			if len(stack) == 0 || stack[len(stack)-1] != mapIdx[int8(slice[idx])] {
 				return false
 			}
 
-			stack = stack[:len(stack)-1]
+			stack = stack[:len(stack)-1] // Удаляем предыдущий символ
 		default:
 			stack = append(stack, int8(slice[idx]))
 		}

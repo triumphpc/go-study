@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Развернуть рекурсивно односвязанный список
 
@@ -24,7 +26,6 @@ func createList() *Item {
 }
 
 func printList(pList *Item) {
-
 	pCurr := pList
 	for {
 		fmt.Printf("%c", pCurr.val)

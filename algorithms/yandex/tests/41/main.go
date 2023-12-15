@@ -16,7 +16,7 @@ import (
 //2. Проходим по массиву, выполняя указанные действия до тех пор, пока на очередной итерации не окажется, что обмены больше не нужны, то есть массив уже отсортирован.
 //3. После не более чем n – 1 итераций выполнение алгоритма заканчивается, так как на каждой итерации хотя бы один элемент оказывается на правильной позиции.
 
-func main() {
+5func main() {
 	task2(os.Stdin, os.Stdout)
 }
 
@@ -65,14 +65,14 @@ func task2(src io.Reader, dst io.Writer) {
 		intValues = append(intValues, intVal)
 	}
 	printResults := false
-	for i := total - 1; i > 0; i-- {
-		for j := 0; j < i; j++ {
-			if intValues[j] > intValues[j+1] {
-				intValues[j], intValues[j+1] = intValues[j+1], intValues[j]
+	for i := total - 1; i > 0; i-- { // 1. Начинаем с полного размера (правый
+		for j := 0; j < i; j++ { // 2. Левый указатель получается пока меньше правого
+			if intValues[j] > intValues[j+1] { // 3. Если текущий шаг больше следующего
+				intValues[j], intValues[j+1] = intValues[j+1], intValues[j] // 3. Меняем местами - получается справа всегда будут самое большое число и мы следующую итерацию делаем на одно сравнение меньше
 				printResults = true
 			}
 		}
-		if i == total-1 || printResults {
+		if i == total-1 || printResults { // Тут сдвигаем правый шаг на один вниз
 			res := fmt.Sprintf("%v", intValues)
 			res = strings.TrimPrefix(res, "[")
 			res = strings.TrimSuffix(res, "]")

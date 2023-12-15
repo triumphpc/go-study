@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	// Инициализация мапы с интовыми значениями
@@ -29,4 +31,5 @@ func SumIntsOrFloats[K comparable, V int64 | float64](m map[K]V) V {
 		s += v
 	}
 	return s
+
 }

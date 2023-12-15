@@ -16,7 +16,7 @@ import (
 // Во второй строке через пробел записаны n неотрицательных чисел, каждое из которых не превосходит 1000.
 
 func main() {
-	task(os.Stdin, os.Stdout)
+	task2(os.Stdin, os.Stdout)
 }
 
 func task(in io.Reader, out io.Writer) {

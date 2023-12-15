@@ -121,8 +121,9 @@ func mergeSort2(data []int) []int {
 
 }
 
+// Сортировка слиянием слайсами
 func mergeSort(data []int) []int {
-	if len(data) <= 1 {
+	if len(data) <= 1 { // Если остался один элемент - его и возвращаем
 		return data
 	}
 

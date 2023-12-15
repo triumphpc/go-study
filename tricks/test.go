@@ -9,6 +9,7 @@ type ModelDataResponseBody struct {
 	Path      string `json:"path,omitempty"`
 	Status    string `json:"status,omitempty"`
 	NeedCrypt bool   `json:"needCrypt,omitempty"`
+	Test      map[string]string
 }
 
 type ModelError struct {
@@ -26,10 +27,17 @@ type ModelDataResponse struct {
 }
 
 func main() {
-	t := time.Now()
-	year, month, day := t.Date()
-	st := time.Date(year, month, day-2, 0, 0, 0, 0, t.Location())
 
-	fmt.Println(st.Unix())
+	testXXX(nil)
+
+}
+
+func testXXX(mm map[string]interface{}) {
+	if mm == nil {
+		fmt.Println("V")
+		return
+	}
+
+	fmt.Println("XX")
 
 }
