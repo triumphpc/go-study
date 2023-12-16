@@ -25,7 +25,6 @@ func main() {
 	slice2 = append(slice2, "NEW") // n
 	inspectSlice(slice1)           // x x c x n 0 0 0 // Length:[5], Cap [8]
 	inspectSlice(slice2)           // - - c x n 0 0 0 // Length:[3], Cap [6]
-	cop
 
 	// 3. Копирование слайса с новой капасити и с новым базовым массивом
 	slice3 := slice1[2:4:4] // новый слайс с новым базовым массивом
