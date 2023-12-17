@@ -2,6 +2,8 @@
 package main
 
 import (
+	"errors"
+	"fmt"
 	"log"
 )
 
@@ -31,16 +33,21 @@ func New(text string) error {
 
 var myErr = New("bad request")
 
+func webCall() error {
+	return New("bad request")
+}
+
 func main() {
 	// if we compare value symantic, we equal strings of errors
 	// and in value symantic it was true
-	if err := webCall(); err == myErr {
+
+	err := webCall() // bad request
+	fmt.Println(err, myErr)
+
+	if errors.Is(err, myErr) { //  Сравнивание ошибки - они равны
 		log.Fatalln("What?", err)
 	}
 
 	log.Println("No error")
-}
 
-func webCall() error {
-	return New("bad request")
 }

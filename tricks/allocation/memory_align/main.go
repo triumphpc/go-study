@@ -18,6 +18,9 @@
 // xxxx xxxx - под второе 8 байта
 // xx00 0000 - 2 байта на третье поле
 
+// https://prog-bytes.hashnode.dev/golang-structs-memory-allocation
+//
+
 package main
 
 import (
