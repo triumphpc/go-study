@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-var x = *new(*int) // т.е. берем значение указателя на указатель типа int
+var x = *new(*int) // т.е. берем значение указателя на указатель типа (разименовывание) int
 var y *int = nil
 
 func f() interface{} {

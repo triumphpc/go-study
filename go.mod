@@ -1,6 +1,6 @@
 module github.com/triumphpc/go-study
 
-go 1.18
+go 1.23
 
 require (
 	github.com/bsm/redislock v0.9.0

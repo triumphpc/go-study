@@ -2,42 +2,42 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
-type ModelDataResponseBody struct {
-	Path      string `json:"path,omitempty"`
-	Status    string `json:"status,omitempty"`
-	NeedCrypt bool   `json:"needCrypt,omitempty"`
-	Test      map[string]string
+// Задача:
+// Есть сервис обработки заказов. Он должен принимать заказы,
+// обрабатывать их и возвращать результат.
+// Найдите ошибку в реализации.
+
+type Order struct {
+	ID   int
+	Data string
 }
 
-type ModelError struct {
-	Code      string `json:"code"`
-	ErrorCode string `json:"errorCode"`
-	Message   string `json:"message"`
-}
+func processOrders() {
+	orders := make(chan Order)   // канал для заказов
+	results := make(chan string) // канал для результатов
 
-type ModelDataResponse struct {
-	Path      string                 `json:"path"`
-	RequestID string                 `json:"requestId"`
-	TimeStamp time.Time              `json:"timeStamp"`
-	Data      *ModelDataResponseBody `json:"data,omitempty"`
-	Error     *ModelError            `json:"error,omitempty"`
+	// Горутина для обработки заказов
+	go func() {
+		for order := range orders {
+			// Обработка заказа
+			result := fmt.Sprintf("Заказ %d обработан", order.ID)
+			results <- result
+		}
+	}()
+
+	// Основной цикл
+	for i := 1; i <= 3; i++ {
+		orders <- Order{ID: i, Data: "данные"}
+		//fmt.Println(<-results)
+	}
+
+	close(orders)
+
+	close(results)
 }
 
 func main() {
-
-	testXXX(nil)
-
-}
-
-func testXXX(mm map[string]interface{}) {
-	if mm == nil {
-		fmt.Println("V")
-		return
-	}
-
-	fmt.Println("XX")
-
+	processOrders()
 }
