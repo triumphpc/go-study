@@ -2,7 +2,6 @@
 <project version="4">
   <component name="GoLinterSettings">
     <option name="concurrency" value="6" />
-    <option name="enableCustomProjectDir" value="false" />
     <option name="enabledLinters">
       <list>
         <option value="gci" />
@@ -20,7 +19,6 @@
         <option value="exhaustruct" />
       </list>
     </option>
-    <option name="goLinterExe" value="/opt/homebrew/bin/golangci-lint" />
     <option name="linterSelected" value="true" />
   </component>
 </project>
